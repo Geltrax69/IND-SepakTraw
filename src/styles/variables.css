@@ -1,0 +1,70 @@
+:root {
+  /* Colors */
+  --color-obsidian: #111111;
+  --color-paper-white: #ffffff;
+  --color-concrete-gray: #e5e5e5;
+  --color-soft-mist: #f5f5f5;
+  --color-steel: #707072;
+  --color-faint-gray: #9e9ea0;
+
+  /* Typography — Font Families with Clear Hierarchy */
+  --font-nike-futura-nd: 'Oswald', 'Impact', 'Futura', sans-serif;
+  --font-helvetica-now-display-medium: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-helvetica-now-text-medium: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-helvetica-now-text: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* Typography — Hierarchy Scale */
+  --text-display: 84px;
+  --leading-display: 0.95;
+  --text-heading-lg: 32px;
+  --text-heading-sm: 24px;
+  --leading-heading-sm: 1.2;
+  --text-subheading: 20px;
+  --leading-subheading: 1.4;
+  --text-body: 16px;
+  --leading-body: 1.6;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.5;
+  --text-caption: 12px;
+  --leading-caption: 1.4;
+
+  /* Typography — Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-36: 36px;
+  --spacing-48: 48px;
+
+  /* Layout */
+  --page-max-width: 1440px;
+  --section-gap: 48px;
+  --card-padding: 12px;
+  --element-gap: 8px;
+
+  /* Border Radius */
+  --radius-lg: 8px;
+  --radius-3xl: 24px;
+  --radius-3xl-2: 30px;
+
+  /* Named Radii */
+  --radius-nav: 24px;
+  --radius-tags: 30px;
+  --radius-cards: 0px;
+  --radius-inputs: 0px;
+  --radius-buttons: 30px;
+
+  /* Surfaces */
+  --surface-paper-white: #ffffff;
+  --surface-soft-mist: #f5f5f5;
+  --surface-concrete-gray: #e5e5e5;
+}

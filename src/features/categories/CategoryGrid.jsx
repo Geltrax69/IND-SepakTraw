@@ -1,16 +1,13 @@
 import React from 'react';
 import { CATEGORY_TILES } from '../../data/nikeData';
 import { PillButton } from '../../components/ui/PillButton';
-import { useSearchFilter } from '../../context/SearchFilterContext';
 
-export const CategoryGrid = () => {
-  const { setSelectedCategory } = useSearchFilter();
-
+export const CategoryGrid = ({ onOpenPortal, onSelectNav }) => {
   return (
-    <section style={{ backgroundColor: 'var(--surface-paper-white)', padding: '56px 0' }}>
+    <section style={{ backgroundColor: 'var(--surface-paper-white)', padding: '60px 0' }}>
       <div className="max-width-container" style={{ marginBottom: '24px' }}>
         <h2 className="heading-sm" style={{ textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
-          Featured Highlights
+          Federation Pillars & Portals
         </h2>
       </div>
 
@@ -19,7 +16,7 @@ export const CategoryGrid = () => {
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '12px',
+          gap: '16px',
           width: '100%',
           maxWidth: 'var(--page-max-width)',
           margin: '0 auto',
@@ -31,13 +28,18 @@ export const CategoryGrid = () => {
             key={tile.id}
             style={{
               position: 'relative',
-              height: '480px',
+              height: '440px',
               overflow: 'hidden',
               borderRadius: '0px',
               backgroundColor: 'var(--color-obsidian)',
               cursor: 'pointer'
             }}
-            onClick={() => setSelectedCategory(tile.ctaCategory)}
+            onClick={() => {
+              if (tile.id === 'cat-myas') onOpenPortal('myas');
+              else if (tile.id === 'cat-rules') onOpenPortal('rules');
+              else if (tile.id === 'cat-events') onOpenPortal('events');
+              else onSelectNav('notice');
+            }}
           >
             {/* Edge to edge Image */}
             <img
@@ -58,7 +60,7 @@ export const CategoryGrid = () => {
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to top, rgba(17, 17, 17, 0.85) 0%, rgba(17, 17, 17, 0.1) 60%)',
+                background: 'linear-gradient(to top, rgba(17, 17, 17, 0.88) 0%, rgba(17, 17, 17, 0.15) 60%)',
                 pointerEvents: 'none'
               }}
             />
@@ -81,7 +83,7 @@ export const CategoryGrid = () => {
               <span className="label-uppercase" style={{ opacity: 0.9 }}>
                 {tile.categoryLabel}
               </span>
-              <h3 className="heading-lg" style={{ color: 'var(--color-paper-white)' }}>
+              <h3 className="heading-lg" style={{ color: 'var(--color-paper-white)', fontSize: '26px' }}>
                 {tile.title}
               </h3>
               <div style={{ marginTop: '8px' }}>

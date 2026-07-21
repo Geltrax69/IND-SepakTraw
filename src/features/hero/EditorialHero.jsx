@@ -1,13 +1,14 @@
 import React from 'react';
 import { PillButton } from '../../components/ui/PillButton';
+import { STFI_HERO_DATA } from '../../data/nikeData';
 
-export const EditorialHero = ({ onOpenStfiPortal, onExploreEvents }) => {
+export const EditorialHero = ({ onOpenStfiPortal, onExploreRules }) => {
   return (
     <section
       style={{
         backgroundColor: 'var(--color-obsidian)',
         color: 'var(--color-paper-white)',
-        minHeight: '85vh',
+        minHeight: '80vh',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
@@ -16,7 +17,7 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreEvents }) => {
         overflow: 'hidden'
       }}
     >
-      {/* Background High Impact SepakTakraw Athlete Action Photo */}
+      {/* Background High Resolution SepakTakraw Action Image */}
       <div
         style={{
           position: 'absolute',
@@ -25,15 +26,15 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreEvents }) => {
           width: '100%',
           height: '100%',
           zIndex: 1,
-          opacity: 0.8,
+          opacity: 0.75,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
         }}
       >
         <img
-          src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=2000&q=90"
-          alt="STFI SepakTakraw India Action"
+          src={STFI_HERO_DATA.heroImage}
+          alt="SepakTakraw India Championship Action"
           style={{
             width: '100%',
             height: '100%',
@@ -46,7 +47,7 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreEvents }) => {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(to top, rgba(17, 17, 17, 0.95) 0%, rgba(17, 17, 17, 0.35) 55%, rgba(17, 17, 17, 0.1) 100%)'
+            background: 'linear-gradient(to top, rgba(17, 17, 17, 0.95) 0%, rgba(17, 17, 17, 0.45) 55%, rgba(17, 17, 17, 0.15) 100%)'
           }}
         />
       </div>
@@ -65,38 +66,45 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreEvents }) => {
         }}
       >
         <span className="label-uppercase" style={{ color: 'var(--color-concrete-gray)', letterSpacing: '0.12em' }}>
-          Official Portal • SepakTakraw Federation of India
+          {STFI_HERO_DATA.bannerTag}
         </span>
 
         <h1 className="display-headline" style={{ maxWidth: '960px' }}>
-          SEPAKTAKRAW INDIA
+          {STFI_HERO_DATA.title}
         </h1>
 
         <p
           style={{
             fontSize: '18px',
             lineHeight: 1.5,
-            maxWidth: '600px',
+            maxWidth: '640px',
             color: 'var(--surface-soft-mist)',
             fontWeight: 400
           }}
         >
-          National Sports Federation recognized by the Ministry of Youth Affairs & Sports (MYAS), Government of India. Affiliated with ISTAF & ASTAF.
+          {STFI_HERO_DATA.subtitle}
         </p>
 
-        <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+        <div style={{ display: 'flex', gap: '12px', marginTop: '12px', flexWrap: 'wrap' }}>
           <PillButton
             variant="paper"
-            onClick={() => onOpenStfiPortal('rules')}
+            onClick={onExploreRules}
           >
-            View Playing Rules
+            Explore Playing Rules
           </PillButton>
           <PillButton
             variant="obsidian"
             style={{ border: '1px solid var(--color-paper-white)' }}
-            onClick={onExploreEvents}
+            onClick={() => onOpenStfiPortal('myas')}
           >
-            National Championships
+            MYAS Disclosures (28)
+          </PillButton>
+          <PillButton
+            variant="obsidian"
+            style={{ border: '1px solid var(--color-concrete-gray)' }}
+            onClick={() => onOpenStfiPortal('events')}
+          >
+            Event Calendar 2026
           </PillButton>
         </div>
       </div>

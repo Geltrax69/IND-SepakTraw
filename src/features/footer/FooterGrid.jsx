@@ -1,14 +1,14 @@
 import React from 'react';
-import { FOOTER_COLUMNS } from '../../data/nikeData';
-import { Globe, Award } from 'lucide-react';
+import { STFI_FOOTER_COLUMNS } from '../../data/nikeData';
+import { Award, Mail, Phone, MapPin } from 'lucide-react';
 
-export const FooterGrid = ({ onOpenStfiPortal }) => {
+export const FooterGrid = ({ onOpenStfiPortal, onSelectNav }) => {
   return (
     <footer
       className="hairline-border-top"
       style={{
         backgroundColor: 'var(--surface-paper-white)',
-        padding: '60px 0 36px 0',
+        padding: '64px 0 36px 0',
         color: 'var(--color-obsidian)'
       }}
     >
@@ -17,12 +17,12 @@ export const FooterGrid = ({ onOpenStfiPortal }) => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
             gap: '36px',
             marginBottom: '48px'
           }}
         >
-          {FOOTER_COLUMNS.map((col, idx) => (
+          {STFI_FOOTER_COLUMNS.map((col, idx) => (
             <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <h4
                 style={{
@@ -39,7 +39,17 @@ export const FooterGrid = ({ onOpenStfiPortal }) => {
                 {col.links.map((link, linkIdx) => (
                   <li key={linkIdx}>
                     <button
-                      onClick={() => onOpenStfiPortal('overview')}
+                      onClick={() => {
+                        if (link.includes('MYAS') || link.includes('Audited') || link.includes('RTI') || link.includes('Anti Doping')) {
+                          onOpenStfiPortal('myas');
+                        } else if (link.includes('Rules')) {
+                          onOpenStfiPortal('rules');
+                        } else if (link.includes('Elections')) {
+                          onOpenStfiPortal('governance');
+                        } else {
+                          onSelectNav('notice');
+                        }
+                      }}
                       style={{
                         background: 'none',
                         border: 'none',
@@ -63,7 +73,25 @@ export const FooterGrid = ({ onOpenStfiPortal }) => {
           ))}
         </div>
 
-        {/* Bottom Bar with Region Selector & Copyright */}
+        {/* Federation Contact & Address Bar */}
+        <div style={{ padding: '24px', backgroundColor: 'var(--surface-soft-mist)', borderRadius: '4px', marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+          <div>
+            <h4 style={{ fontWeight: 700, fontSize: '15px', marginBottom: '4px' }}>SepakTakraw Federation of India (STFI) Office</h4>
+            <p style={{ fontSize: '13px', color: 'var(--color-steel)' }}>Official Portal for National Championships, MYAS Disclosures & Selection Trials</p>
+          </div>
+          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', fontSize: '13px', fontWeight: 600 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Mail size={16} />
+              <span>stfi@sepaktrawindia.com</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <MapPin size={16} />
+              <span>New Delhi, India</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar with Copyright */}
         <div
           style={{
             display: 'flex',
@@ -84,10 +112,10 @@ export const FooterGrid = ({ onOpenStfiPortal }) => {
           </div>
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontWeight: 500 }}>
-            <button onClick={() => onOpenStfiPortal('myas')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>MYAS Disclosures</button>
-            <button onClick={() => onOpenStfiPortal('rti')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>RTI Public Officer</button>
+            <button onClick={() => onOpenStfiPortal('myas')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>MYAS Disclosures (28)</button>
+            <button onClick={() => onOpenStfiPortal('governance')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>RTI Public Officer</button>
             <button onClick={() => onOpenStfiPortal('rules')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>Playing Rules</button>
-            <button onClick={() => onOpenStfiPortal('elections')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>Elections 2024-2028</button>
+            <button onClick={() => onOpenStfiPortal('governance')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>Elections 2024-2028</button>
           </div>
         </div>
       </div>

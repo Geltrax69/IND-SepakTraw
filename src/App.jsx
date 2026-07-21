@@ -5,8 +5,6 @@ import { TopNav } from './features/navigation/TopNav';
 import { EditorialHero } from './features/hero/EditorialHero';
 import { CategoryGrid } from './features/categories/CategoryGrid';
 import { ProductGrid } from './features/products/ProductGrid';
-import { ProductDetailModal } from './features/products/ProductDetailModal';
-import { CartDrawer } from './features/cart/CartDrawer';
 import { FooterGrid } from './features/footer/FooterGrid';
 import { StfiPortalModal } from './features/stfi/StfiPortalModal';
 
@@ -20,11 +18,11 @@ function App() {
   };
 
   const handleSelectNav = (navId) => {
-    if (['myas', 'rti', 'elections', 'rules', 'history'].includes(navId)) {
-      handleOpenStfiPortal(navId === 'myas' ? 'myas' : navId === 'rules' ? 'rules' : navId === 'rti' ? 'governance' : 'overview');
+    if (['myas', 'rti', 'elections', 'history', 'antidoping', 'governance'].includes(navId)) {
+      handleOpenStfiPortal(navId === 'myas' ? 'myas' : navId === 'rules' ? 'rules' : navId === 'events' ? 'events' : 'governance');
     } else {
-      const catalog = document.getElementById('product-catalog');
-      if (catalog) catalog.scrollIntoView({ behavior: 'smooth' });
+      const section = document.getElementById('stfi-content-section');
+      if (section) section.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -32,22 +30,31 @@ function App() {
     <CartProvider>
       <SearchFilterProvider>
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--surface-paper-white)' }}>
-          {/* Site Navigation */}
+          {/* Uncluttered Federation Header */}
           <TopNav onOpenStfiPortal={handleOpenStfiPortal} onSelectNav={handleSelectNav} />
 
-          {/* Main Content Sections */}
+          {/* Main STFI Federation Portal Content */}
           <main style={{ flex: 1 }}>
-            <EditorialHero onOpenStfiPortal={handleOpenStfiPortal} onExploreEvents={() => handleOpenStfiPortal('events')} />
-            <CategoryGrid />
-            <ProductGrid />
+            <EditorialHero
+              onOpenStfiPortal={handleOpenStfiPortal}
+              onExploreRules={() => handleOpenStfiPortal('rules')}
+            />
+            <CategoryGrid
+              onOpenPortal={handleOpenStfiPortal}
+              onSelectNav={handleSelectNav}
+            />
+            <ProductGrid
+              onOpenPortal={handleOpenStfiPortal}
+            />
           </main>
 
           {/* Site Footer */}
-          <FooterGrid onOpenStfiPortal={handleOpenStfiPortal} />
+          <FooterGrid
+            onOpenStfiPortal={handleOpenStfiPortal}
+            onSelectNav={handleSelectNav}
+          />
 
-          {/* Interactive Drawers & Modals */}
-          <CartDrawer />
-          <ProductDetailModal />
+          {/* Interactive Federation Portal Modal */}
           <StfiPortalModal
             isOpen={isStfiModalOpen}
             onClose={() => setIsStfiModalOpen(false)}

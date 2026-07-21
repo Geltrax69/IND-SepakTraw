@@ -589,8 +589,3 @@ STFI
 
 
 
-now we have to make chanegs in our nike website.
-that is  , mention in the requirements.md.
-And it should reflect in the UI, so add them .
-and later i will tell you how to animate it.
-and make chanegs.

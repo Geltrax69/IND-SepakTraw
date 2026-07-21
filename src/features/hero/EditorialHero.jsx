@@ -1,10 +1,7 @@
 import React from 'react';
 import { PillButton } from '../../components/ui/PillButton';
-import { useSearchFilter } from '../../context/SearchFilterContext';
 
-export const EditorialHero = () => {
-  const { setSelectedCategory } = useSearchFilter();
-
+export const EditorialHero = ({ onOpenStfiPortal, onExploreEvents }) => {
   return (
     <section
       style={{
@@ -19,7 +16,7 @@ export const EditorialHero = () => {
         overflow: 'hidden'
       }}
     >
-      {/* Background Featured Product Image */}
+      {/* Background High Impact SepakTakraw Athlete Action Photo */}
       <div
         style={{
           position: 'absolute',
@@ -28,23 +25,23 @@ export const EditorialHero = () => {
           width: '100%',
           height: '100%',
           zIndex: 1,
-          opacity: 0.82,
+          opacity: 0.8,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
         }}
       >
         <img
-          src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=2000&q=90"
-          alt="Nike Air Max Dn Hero"
+          src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=2000&q=90"
+          alt="STFI SepakTakraw India Action"
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: 'center 40%'
+            objectPosition: 'center 35%'
           }}
         />
-        {/* Dark Gradient Overlay for readability */}
+        {/* Dark Gradient Overlay */}
         <div
           style={{
             position: 'absolute',
@@ -68,41 +65,38 @@ export const EditorialHero = () => {
         }}
       >
         <span className="label-uppercase" style={{ color: 'var(--color-concrete-gray)', letterSpacing: '0.12em' }}>
-          Introducing Nike Air Max Dn
+          Official Portal • SepakTakraw Federation of India
         </span>
 
-        <h1 className="display-headline" style={{ maxWidth: '840px' }}>
-          UNREAL POWER
+        <h1 className="display-headline" style={{ maxWidth: '960px' }}>
+          SEPAKTAKRAW INDIA
         </h1>
 
         <p
           style={{
             fontSize: '18px',
             lineHeight: 1.5,
-            maxWidth: '560px',
+            maxWidth: '600px',
             color: 'var(--surface-soft-mist)',
             fontWeight: 400
           }}
         >
-          Feel the unreal. The next generation of Air cushioning has arrived with Dynamic Air technology to revolutionize your stride.
+          National Sports Federation recognized by the Ministry of Youth Affairs & Sports (MYAS), Government of India. Affiliated with ISTAF & ASTAF.
         </p>
 
         <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
           <PillButton
             variant="paper"
-            onClick={() => setSelectedCategory('New Releases')}
+            onClick={() => onOpenStfiPortal('rules')}
           >
-            Shop Air Max
+            View Playing Rules
           </PillButton>
           <PillButton
             variant="obsidian"
             style={{ border: '1px solid var(--color-paper-white)' }}
-            onClick={() => {
-              const el = document.getElementById('product-catalog');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={onExploreEvents}
           >
-            Explore Collection
+            National Championships
           </PillButton>
         </div>
       </div>

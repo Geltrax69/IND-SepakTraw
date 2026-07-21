@@ -1,8 +1,8 @@
 import React from 'react';
 import { FOOTER_COLUMNS } from '../../data/nikeData';
-import { Globe } from 'lucide-react';
+import { Globe, Award } from 'lucide-react';
 
-export const FooterGrid = () => {
+export const FooterGrid = ({ onOpenStfiPortal }) => {
   return (
     <footer
       className="hairline-border-top"
@@ -38,21 +38,24 @@ export const FooterGrid = () => {
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {col.links.map((link, linkIdx) => (
                   <li key={linkIdx}>
-                    <a
-                      href="#"
-                      onClick={(e) => e.preventDefault()}
+                    <button
+                      onClick={() => onOpenStfiPortal('overview')}
                       style={{
+                        background: 'none',
+                        border: 'none',
                         color: 'var(--color-steel)',
                         fontSize: '14px',
                         fontWeight: 500,
-                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        padding: 0,
                         transition: 'color 0.2s ease'
                       }}
                       onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-obsidian)'}
                       onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-steel)'}
                     >
                       {link}
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -75,16 +78,16 @@ export const FooterGrid = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Globe size={14} color="var(--color-obsidian)" />
-            <span style={{ fontWeight: 600, color: 'var(--color-obsidian)' }}>United States</span>
-            <span>© 2026 Nike, Inc. All Rights Reserved</span>
+            <Award size={14} color="var(--color-obsidian)" />
+            <span style={{ fontWeight: 600, color: 'var(--color-obsidian)' }}>SepakTakraw Federation of India</span>
+            <span>© 2026 STFI. All Rights Reserved</span>
           </div>
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontWeight: 500 }}>
-            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--color-steel)', textDecoration: 'none' }}>Guides</a>
-            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--color-steel)', textDecoration: 'none' }}>Terms of Sale</a>
-            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--color-steel)', textDecoration: 'none' }}>Terms of Use</a>
-            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--color-steel)', textDecoration: 'none' }}>Nike Privacy Policy</a>
+            <button onClick={() => onOpenStfiPortal('myas')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>MYAS Disclosures</button>
+            <button onClick={() => onOpenStfiPortal('rti')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>RTI Public Officer</button>
+            <button onClick={() => onOpenStfiPortal('rules')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>Playing Rules</button>
+            <button onClick={() => onOpenStfiPortal('elections')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>Elections 2024-2028</button>
           </div>
         </div>
       </div>

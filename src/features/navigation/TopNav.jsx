@@ -1,112 +1,186 @@
 import React, { useState } from 'react';
-import { Search, Heart, ShoppingBag, Menu, X, Award } from 'lucide-react';
-import { NikeSwoosh } from '../../components/ui/NikeSwoosh';
+import { Search, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
+import { StfiLogo } from '../../components/ui/StfiLogo';
 import { useCart } from '../../context/CartContext';
 import { useSearchFilter } from '../../context/SearchFilterContext';
 
-export const TopNav = ({ onOpenStfiPortal }) => {
+export const TopNav = ({ onOpenStfiPortal, onSelectNav }) => {
   const { setIsCartOpen, totalItemsCount } = useCart();
-  const { searchQuery, setSearchQuery, selectedCategory, setSelectedCategory } = useSearchFilter();
+  const { searchQuery, setSearchQuery } = useSearchFilter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
-  const categories = [
-    { id: 'New Releases', label: 'New Releases' },
-    { id: 'STFI Official', label: 'STFI SepakTakraw' },
-    { id: 'Men', label: 'Men' },
-    { id: 'Women', label: 'Women' },
-    { id: 'Kids', label: 'Kids' }
+  const mainNavItems = [
+    { id: 'home', label: 'Home' },
+    {
+      id: 'notice',
+      label: 'Notice',
+      children: [
+        { id: 'news', label: 'News & Announcements' },
+        { id: 'results', label: 'Tournament Results' }
+      ]
+    },
+    {
+      id: 'rules',
+      label: 'Rules & Regulations',
+      children: [
+        { id: 'rule-beach', label: 'Beach Event Rules' },
+        { id: 'rule-regu', label: 'Regu Team Rules' },
+        { id: 'rule-double', label: 'Double Event Rules' },
+        { id: 'rule-quad', label: 'Quad Event Rules' }
+      ]
+    },
+    {
+      id: 'events',
+      label: 'Events',
+      children: [
+        { id: 'national-championships', label: 'National Championships' },
+        { id: 'selection-trials', label: 'Selection Trials' },
+        { id: 'training-camps', label: 'Training Camps' },
+        { id: 'event-calendar', label: 'Event Calendar' }
+      ]
+    },
+    { id: 'myas', label: 'MYAS Compliance' },
+    { id: 'antidoping', label: 'Anti Doping' },
+    { id: 'rti', label: 'RTI' },
+    { id: 'elections', label: 'Elections' },
+    { id: 'history', label: 'History' },
+    { id: 'contact', label: 'Contact Us' }
   ];
 
   return (
-    <header style={{ backgroundColor: 'var(--surface-paper-white)', position: 'relative', zIndex: 40 }}>
-      {/* Top Thin Utility Bar with STFI Federation Banner */}
+    <header style={{ backgroundColor: 'var(--surface-paper-white)', position: 'relative', zIndex: 40, borderBottom: '1px solid var(--color-concrete-gray)' }}>
+      {/* Top Utility Disclosure Bar */}
       <div style={{ backgroundColor: 'var(--color-obsidian)', padding: '6px 24px', fontSize: '12px', color: 'var(--color-paper-white)' }}>
         <div className="max-width-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontWeight: 600, letterSpacing: '0.04em' }}>
-            <Award size={14} color="var(--color-paper-white)" />
-            <span>STFI — SepakTakraw Federation of India (MYAS / ISTAF / ASTAF Recognized)</span>
+          <div style={{ fontWeight: 600, letterSpacing: '0.04em' }}>
+            SEPAKTAKRAW FEDERATION OF INDIA (STFI) — Recognized by MYAS, ISTAF & ASTAF
           </div>
           <div style={{ display: 'flex', gap: '16px', alignItems: 'center', fontWeight: 500 }}>
-            <button
-              onClick={onOpenStfiPortal}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'var(--color-paper-white)',
-                cursor: 'pointer',
-                fontWeight: 600,
-                textDecoration: 'underline'
-              }}
-            >
-              STFI Official Portal & MYAS Compliance
-            </button>
+            <span style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={() => onOpenStfiPortal('myas')}>
+              MYAS Mandatory Disclosures (28)
+            </span>
             <span>|</span>
-            <span style={{ cursor: 'pointer' }}>Help</span>
+            <span style={{ cursor: 'pointer' }} onClick={() => onOpenStfiPortal('rti')}>RTI Information</span>
             <span>|</span>
-            <span style={{ cursor: 'pointer', fontWeight: 600 }}>Sign In</span>
+            <span style={{ cursor: 'pointer' }} onClick={() => onOpenStfiPortal('elections')}>Elections 2024-2028</span>
           </div>
         </div>
       </div>
 
       {/* Main Nav Bar */}
-      <div className="max-width-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
-        {/* Left: Nike Swoosh */}
-        <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px' }} onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }}>
-          <NikeSwoosh className="w-16 h-8" color="var(--color-obsidian)" />
-          <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.08em', borderLeft: '1px solid var(--color-concrete-gray)', paddingLeft: '10px', textTransform: 'uppercase' }}>
-            STFI Partner
-          </span>
+      <div className="max-width-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '68px' }}>
+        {/* Left: STFI Logo */}
+        <div style={{ cursor: 'pointer' }} onClick={() => onSelectNav('home')}>
+          <StfiLogo color="var(--color-obsidian)" />
         </div>
 
-        {/* Center Desktop Category Navigation */}
-        <nav className="desktop-categories" style={{ display: 'flex', gap: '28px' }}>
-          {categories.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              style={{
-                background: 'none',
-                border: 'none',
-                fontFamily: 'var(--font-helvetica-now-text)',
-                fontSize: '15px',
-                fontWeight: selectedCategory === cat.id ? 700 : 600,
-                color: 'var(--color-obsidian)',
-                borderBottom: selectedCategory === cat.id ? '2px solid var(--color-obsidian)' : '2px solid transparent',
-                paddingBottom: '4px',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease'
-              }}
+        {/* Center Desktop Navigation */}
+        <nav className="desktop-categories" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          {mainNavItems.map(item => (
+            <div
+              key={item.id}
+              style={{ position: 'relative' }}
+              onMouseEnter={() => setActiveDropdown(item.id)}
+              onMouseLeave={() => setActiveDropdown(null)}
             >
-              {cat.label}
-            </button>
+              <button
+                onClick={() => {
+                  if (item.id === 'myas' || item.id === 'rti' || item.id === 'elections') {
+                    onOpenStfiPortal(item.id);
+                  } else {
+                    onSelectNav(item.id);
+                  }
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontFamily: 'var(--font-helvetica-now-text)',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  color: 'var(--color-obsidian)',
+                  padding: '8px 4px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <span>{item.label}</span>
+                {item.children && <ChevronDown size={14} color="var(--color-steel)" />}
+              </button>
+
+              {/* Submenu Dropdown */}
+              {item.children && activeDropdown === item.id && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    backgroundColor: 'var(--surface-paper-white)',
+                    border: '1px solid var(--color-concrete-gray)',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    minWidth: '220px',
+                    padding: '8px 0',
+                    zIndex: 50
+                  }}
+                >
+                  {item.children.map(child => (
+                    <button
+                      key={child.id}
+                      onClick={() => {
+                        onSelectNav(child.id);
+                        setActiveDropdown(null);
+                      }}
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        textAlign: 'left',
+                        padding: '10px 16px',
+                        background: 'none',
+                        border: 'none',
+                        fontSize: '13px',
+                        fontWeight: 500,
+                        color: 'var(--color-obsidian)',
+                        cursor: 'pointer',
+                        transition: 'background-color 0.15s ease'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--surface-soft-mist)'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    >
+                      {child.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </nav>
 
-        {/* Right Actions: Search Field, Wishlist, Bag */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          {/* Search Field */}
+        {/* Right Actions: Search & Gear Cart */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               backgroundColor: 'var(--surface-soft-mist)',
               borderRadius: 'var(--radius-nav)',
-              padding: '8px 16px',
-              gap: '10px',
-              width: '180px'
+              padding: '6px 14px',
+              gap: '8px',
+              width: '160px'
             }}
           >
-            <Search size={18} color="var(--color-steel)" />
+            <Search size={16} color="var(--color-steel)" />
             <input
               type="text"
-              placeholder="Search gear..."
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
                 border: 'none',
                 background: 'transparent',
                 outline: 'none',
-                fontSize: '14px',
+                fontSize: '13px',
                 fontFamily: 'var(--font-helvetica-now-text)',
                 fontWeight: 500,
                 color: 'var(--color-obsidian)',
@@ -115,17 +189,8 @@ export const TopNav = ({ onOpenStfiPortal }) => {
             />
           </div>
 
-          {/* Wishlist Icon */}
           <button
-            aria-label="Favorites"
-            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
-          >
-            <Heart size={22} color="var(--color-obsidian)" strokeWidth={1.75} />
-          </button>
-
-          {/* Cart Bag Icon */}
-          <button
-            aria-label="Bag"
+            aria-label="STFI Gear Cart"
             onClick={() => setIsCartOpen(true)}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', position: 'relative' }}
           >
@@ -153,7 +218,6 @@ export const TopNav = ({ onOpenStfiPortal }) => {
             )}
           </button>
 
-          {/* Mobile Menu Toggle */}
           <button
             className="mobile-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -164,7 +228,7 @@ export const TopNav = ({ onOpenStfiPortal }) => {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div
           className="hairline-border-top"
@@ -173,39 +237,31 @@ export const TopNav = ({ onOpenStfiPortal }) => {
             backgroundColor: 'var(--surface-paper-white)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '16px'
+            gap: '12px'
           }}
         >
-          {categories.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                setSelectedCategory(cat.id);
-                setMobileMenuOpen(false);
-              }}
-              style={{
-                textAlign: 'left',
-                background: 'none',
-                border: 'none',
-                fontSize: '18px',
-                fontWeight: 600,
-                color: 'var(--color-obsidian)',
-                cursor: 'pointer'
-              }}
-            >
-              {cat.label}
-            </button>
+          {mainNavItems.map(item => (
+            <div key={item.id}>
+              <button
+                onClick={() => {
+                  onSelectNav(item.id);
+                  setMobileMenuOpen(false);
+                }}
+                style={{
+                  textAlign: 'left',
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: 'var(--color-obsidian)',
+                  cursor: 'pointer',
+                  width: '100%'
+                }}
+              >
+                {item.label}
+              </button>
+            </div>
           ))}
-          <button
-            onClick={() => {
-              onOpenStfiPortal();
-              setMobileMenuOpen(false);
-            }}
-            className="btn-pill btn-obsidian btn-sm"
-            style={{ marginTop: '8px' }}
-          >
-            STFI Federation & MYAS Portal
-          </button>
         </div>
       )}
     </header>

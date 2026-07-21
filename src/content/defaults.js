@@ -1,6 +1,5 @@
 // Single source of truth for ALL editable site content.
-// The admin panel edits slices of this object; every module reads from it via useContent().
-// ponytail: one flat-ish object, no schema layer — the object IS the schema.
+import { assets } from '../components/ui/images';
 
 export const defaultContent = {
   meta: {
@@ -16,34 +15,70 @@ export const defaultContent = {
     tagline: 'STRONGER TOGETHER',
     subtitle:
       'The National Governing Body for SepakTakraw in India — recognized by the Ministry of Youth Affairs & Sports, affiliated with ISTAF & ASTAF.',
-    heroImage:
-      'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=2000&q=90',
+    heroImage: assets.moments[0],
   },
 
   // Live-countdown banner (ISTAF-style). date is ISO for the timer.
   featuredEvent: {
     kicker: 'Next Championship',
-    title: '34th Senior National SepakTakraw Championship',
+    title: '35th Senior National SepakTakraw Championship',
     venue: 'Indira Gandhi Indoor Stadium, New Delhi',
-    date: '2026-10-24T09:00:00',
-    image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1800&q=80',
+    date: '2025-10-23T09:00:00',
+    image: assets.moments[1],
     cta: 'Event Details',
   },
 
-  // Quick federation stat strip (like FIFA/BWF headline numbers)
+  // Quick federation stat strip
   stats: [
     { value: '28+', label: 'Affiliated State Units' },
-    { value: '34', label: 'Senior Nationals Held' },
+    { value: '35', label: 'Senior Nationals Held' },
     { value: '1.55m', label: 'Regulation Net Height' },
     { value: 'ISTAF', label: 'World Body Member' },
   ],
 
-  // Image-led news "moments" — first item is the large lead story.
+  // Image-led news "moments" — using local high-resolution Indian Sepak Takraw photos from src/components/ui/images/moments/
   highlights: [
-    { id: 'h1', kicker: 'Championship', live: true, title: 'Manipur crowned Regu champions in a thrilling Senior National final', date: 'July 18, 2026', image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1400&q=80', target: 'notice' },
-    { id: 'h2', kicker: 'Selection', live: false, title: 'Asian Games probables camp begins at SAI Bengaluru', date: 'July 12, 2026', image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=900&q=80', target: 'events' },
-    { id: 'h3', kicker: 'Governance', live: false, title: 'STFI publishes audited accounts & ACTC calendar for FY 2025–26', date: 'July 05, 2026', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80', target: 'myas' },
-    { id: 'h4', kicker: 'Grassroots', live: false, title: 'Sub-Junior development drive expands to five new states', date: 'June 28, 2026', image: 'https://images.unsplash.com/photo-1526676037777-05a232554f77?auto=format&fit=crop&w=900&q=80', target: 'notice' },
+    { id: 'h1', kicker: 'Championship Result', live: true, title: 'Result : 29th Junior National Championship for Boys & Girls', date: 'March 2026', image: assets.moments[0], target: 'notice' },
+    { id: 'h2', kicker: 'Sub-Junior Results', live: false, title: 'RESULTS – 28th SUB JUNIOR NATIONAL CHAMPIONSHIP From 23rd to 27th March, 2026', date: 'March 27, 2026', image: assets.moments[1], target: 'notice' },
+    { id: 'h3', kicker: 'Selection Timelines', live: false, title: 'SELECTION TIMELINES For ASIAN GAMES 2026', date: 'February 2026', image: assets.moments[2], target: 'events' },
+    { id: 'h4', kicker: 'Selection Guidelines', live: false, title: 'STFI – POLICY & GUIDELINES FOR SELECTION TRIALS (MAJOR EVENTS)', date: 'January 2026', image: assets.moments[3], target: 'myas' },
+    { id: 'h5', kicker: 'National Calendar', live: false, title: 'STFI Events Calendar 2026-27 Announced', date: 'January 2026', image: assets.moments[4], target: 'events' },
+  ],
+
+  // Extracted X (Twitter) Social Feed Posts — automatically rendered on homepage with author, hashtags & playable media
+  xPosts: [
+    {
+      id: 'x-1552525191426609155',
+      tweetId: '1552525191426609155',
+      url: 'https://x.com/Media_SAI/status/1552525191426609155?s=20',
+      authorName: 'SAI Media',
+      authorHandle: '@Media_SAI',
+      authorAvatar: 'https://pbs.twimg.com/profile_images/1612726756627877888/aC4b5c7p_400x400.jpg',
+      verified: true,
+      text: 'Glimpses of Indian SepakTakraw team showcasing breathtaking agility, aerial acrobatic kicks and supreme teamwork! 🇮🇳🔥 #SepakTakraw #SAIMedia #TeamIndia #IndianSports',
+      hashtags: ['#SepakTakraw', '#SAIMedia', '#TeamIndia', '#IndianSports'],
+      isVideo: false,
+      image: assets.moments[0],
+      embedIframeUrl: 'https://platform.twitter.com/embed/Tweet.html?id=1552525191426609155',
+      date: 'July 28, 2022',
+      featured: true,
+    },
+    {
+      id: 'x-1903824150529265704',
+      tweetId: '1903824150529265704',
+      url: 'https://x.com/IndiaSportsHub/status/1903824150529265704?s=20',
+      authorName: 'India Sports Hub',
+      authorHandle: '@IndiaSportsHub',
+      authorAvatar: 'https://api.dicebear.com/7.x/identicon/svg?seed=IndiaSportsHub',
+      verified: true,
+      text: 'UNBELIEVABLE Scissor Kick Spike in Sepak Takraw! 🚀 Watch Indian athletes execute gravity-defying Sunback spikes in slow motion. ⚡ Click play below to watch the full rally right inside the app! #SepakTakraw #IndiaSports #MustWatch #AcrobaticSports',
+      hashtags: ['#SepakTakraw', '#IndiaSports', '#MustWatch', '#AcrobaticSports'],
+      isVideo: true,
+      image: assets.moments[1],
+      embedIframeUrl: 'https://platform.twitter.com/embed/Tweet.html?id=1903824150529265704',
+      date: 'March 23, 2025',
+      featured: true,
+    },
   ],
 
   nav: [
@@ -71,7 +106,7 @@ export const defaultContent = {
         { id: 'nationals', label: 'National Championships' },
         { id: 'selection', label: 'Selection Trials' },
         { id: 'camps', label: 'Training Camps' },
-        { id: 'calendar', label: 'Event Calendar 2026' },
+        { id: 'calendar', label: 'Event Calendar 2026-27' },
       ],
     },
     {
@@ -87,18 +122,23 @@ export const defaultContent = {
     { id: 'contact', label: 'Contact Us' },
   ],
 
+  // Federation Pillars — Strictly using moments images (i1.png, i2.png, i3.png, i4.png)
   categories: [
-    { id: 'cat-notices', title: 'OFFICIAL NOTICES & CIRCULARS', categoryLabel: 'Federation Updates', image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=80', ctaPrimary: 'View Notices', target: 'notice' },
-    { id: 'cat-rules', title: 'RULES & REGULATIONS', categoryLabel: 'Beach, Regu, Double & Quad', image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1000&q=80', ctaPrimary: 'Explore Rules', target: 'rules' },
-    { id: 'cat-myas', title: 'MYAS COMPLIANCE PORTAL', categoryLabel: '28 Mandatory Governance Sections', image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=80', ctaPrimary: 'View Compliance', target: 'myas' },
-    { id: 'cat-events', title: 'CHAMPIONSHIPS & TRIALS', categoryLabel: 'National Calendar 2026', image: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?auto=format&fit=crop&w=1000&q=80', ctaPrimary: 'Event Calendar', target: 'events' },
+    { id: 'cat-notices', title: 'OFFICIAL NOTICES & CIRCULARS', categoryLabel: 'Federation Updates', image: assets.moments[0], ctaPrimary: 'View Notices', target: 'notice' },
+    { id: 'cat-rules', title: 'RULES & REGULATIONS', categoryLabel: 'Beach, Regu, Double & Quad', image: assets.moments[1], ctaPrimary: 'Explore Rules', target: 'rules' },
+    { id: 'cat-myas', title: 'MYAS COMPLIANCE PORTAL', categoryLabel: '28 Mandatory Governance Sections', image: assets.moments[2], ctaPrimary: 'View Compliance', target: 'myas' },
+    { id: 'cat-events', title: 'CHAMPIONSHIPS & TRIALS', categoryLabel: 'National Calendar 2026-27', image: assets.moments[3], ctaPrimary: 'Event Calendar', target: 'events' },
   ],
 
+  // Latest Info, News & Notices requested list
   notices: [
-    { id: 'notice-1', date: 'July 18, 2026', category: 'Selection Trial', badge: 'Urgent', title: 'Selection Trials Notification for 34th Senior National Championship & Asian Games Probables', desc: 'Official notification regarding national coaching camps and selection trials to be conducted at SAI Center, Bengaluru. All affiliated state units must submit athlete entries before August 10, 2026.', documentPdf: 'STFI_Selection_Trial_Circular_2026.pdf' },
-    { id: 'notice-2', date: 'July 05, 2026', category: 'Elections', badge: 'Official', title: 'Publication of Electoral Roll & Schedule for STFI General Body Elections (2024-2028)', desc: 'Notice issued by the Returning Officer containing guidelines for nomination filings, candidate scrutiny, and general body election voting schedule.', documentPdf: 'STFI_Electoral_Roll_Notification_2026.pdf' },
-    { id: 'notice-3', date: 'June 22, 2026', category: 'Results', badge: 'Results', title: 'Official Results: 33rd Junior National SepakTakraw Championship (Imphal, Manipur)', desc: 'Complete match scores, team standings, and medal winners list for Regu, Double, and Quad events held in Imphal.', documentPdf: '33rd_Junior_National_Results.pdf' },
-    { id: 'notice-4', date: 'May 14, 2026', category: 'MYAS Compliance', badge: 'Compliance', title: 'Submission of Audited Financial Accounts & ACTC Calendar FY 2025-2026', desc: 'Public disclosure of annual audited financial accounts, statutory auditor statements, and annual competition calendar.', documentPdf: 'STFI_Audited_Accounts_2025_26.pdf' },
+    { id: 'notice-1', date: 'March 27, 2026', category: 'Results', badge: 'New', title: 'Result : 29th Junior National Championship for Boys & Girls', desc: 'Official championship final standings, team medalists, and player points tally for 29th Junior National SepakTakraw Championship.', documentPdf: '29th_Junior_National_Results.pdf' },
+    { id: 'notice-2', date: 'March 23, 2026', category: 'Results', badge: 'Results', title: 'RESULTS – 28th SUB JUNIOR NATIONAL CHAMPIONSHIP From 23rd to 27th March, 2026', desc: 'Complete match results, state standings, and merit certificates for 28th Sub-Junior National Championship.', documentPdf: '28th_Sub_Junior_National_Results.pdf' },
+    { id: 'notice-3', date: 'February 15, 2026', category: 'Calendar', badge: 'Official', title: 'STFI Events Calendar 2026-27', desc: 'Approved MYAS/ACTC Annual Competition and Training Calendar for FY 2026-27 across Senior, Junior & Sub-Junior events.', documentPdf: 'STFI_Events_Calendar_2026_27.pdf' },
+    { id: 'notice-4', date: 'October 23, 2025', category: 'Championship', badge: 'Senior National', title: '35th Senior National Sepaktakraw Championship : 23-27 OCTOBER 2025', desc: 'Official circular and entry forms for 35th Senior National SepakTakraw Championship held at Indira Gandhi Indoor Stadium, New Delhi.', documentPdf: '35th_Senior_National_Circular.pdf' },
+    { id: 'notice-5', date: 'November 27, 2025', category: 'Junior National', badge: 'Circular', title: '29th Junior National Sepaktakraw Championship will be held from 27-11-2025', desc: 'Notice regarding dates, venue, player age verification guidelines, and entry submissions for 29th Junior National.', documentPdf: '29th_Junior_National_Notice.pdf' },
+    { id: 'notice-6', date: 'January 10, 2026', category: 'Selection Trial', badge: 'Urgent', title: 'SELECTION TIMELINES For ASIAN GAMES 2026', desc: 'Comprehensive schedule of national coaching camps, trials, sports science evaluations, and probables screening for Asian Games 2026.', documentPdf: 'Asian_Games_2026_Selection_Timelines.pdf' },
+    { id: 'notice-7', date: 'January 05, 2026', category: 'Policy', badge: 'Governance', title: 'STFI – POLICY & GUIDELINES FOR SELECTION TRIALS (MAJOR EVENTS)', desc: 'Official selection policy document detailing transparency standards, evaluation matrix, and selection committee protocols.', documentPdf: 'STFI_Selection_Policy_Guidelines.pdf' },
   ],
 
   rules: [
@@ -140,9 +180,10 @@ export const defaultContent = {
   ],
 
   events: [
-    { id: 'evt-1', name: '34th Senior National SepakTakraw Championship 2026', dates: 'October 24–28, 2026', venue: 'Indira Gandhi Indoor Stadium, New Delhi', category: 'Senior National', events: 'Regu, Double, Quad & Team Event (Men & Women)' },
-    { id: 'evt-2', name: 'Asian Games 2026 National Selection Trials', dates: 'November 12–15, 2026', venue: 'SAI Netaji Subhas Southern Centre, Bengaluru', category: 'Selection Trial', events: 'Core Probables Evaluation' },
-    { id: 'evt-3', name: '33rd Junior & Sub-Junior National Championship', dates: 'December 10–14, 2026', venue: 'Khuman Lampak Sports Complex, Imphal, Manipur', category: 'Junior National', events: 'Boys & Girls (Under-19 & Under-14)' },
+    { id: 'evt-1', name: '35th Senior National SepakTakraw Championship 2025', dates: 'October 23–27, 2025', venue: 'Indira Gandhi Indoor Stadium, New Delhi', category: 'Senior National', events: 'Regu, Double, Quad & Team Event (Men & Women)' },
+    { id: 'evt-2', name: '29th Junior National SepakTakraw Championship', dates: 'November 27–December 01, 2025', venue: 'Khuman Lampak Sports Complex, Imphal, Manipur', category: 'Junior National', events: 'Boys & Girls (Under-19)' },
+    { id: 'evt-3', name: '28th Sub Junior National Championship', dates: 'March 23–27, 2026', venue: 'SAI Netaji Subhas Southern Centre, Bengaluru', category: 'Sub-Junior', events: 'Boys & Girls (Under-14)' },
+    { id: 'evt-4', name: 'Asian Games 2026 Selection Trials', dates: 'November 12–15, 2026', venue: 'SAI Center, Bengaluru', category: 'Selection Trial', events: 'Core Probables Evaluation' },
   ],
 
   footerColumns: [

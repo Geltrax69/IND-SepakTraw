@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Award, Mail, Phone, MapPin } from 'lucide-react';
+import { EmojiEvents as Award, Email as Mail, Phone, Room as MapPin } from '@mui/icons-material';
 import { useContent } from '../../content/ContentContext';
 
 export const FooterGrid = ({ onOpenStfiPortal, onSelectNav }) => {

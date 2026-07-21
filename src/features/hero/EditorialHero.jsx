@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck } from 'lucide-react';
+import { VerifiedUser as ShieldCheck } from '@mui/icons-material';
 import { PillButton } from '../../components/ui/PillButton';
 import { Img } from '../../components/ui/Img';
 import { useContent } from '../../content/ContentContext';

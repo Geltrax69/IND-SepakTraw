@@ -21,7 +21,8 @@
   --color-accent-soft: #E8F1EC;
 
   /* Typography — Font Families with Clear Hierarchy */
-  --font-nike-futura-nd: 'Oswald', 'Impact', 'Futura', sans-serif;
+  --font-stfi-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-nike-futura-nd: var(--font-stfi-display);
   --font-helvetica-now-display-medium: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
   --font-helvetica-now-text-medium: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
   --font-helvetica-now-text: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;

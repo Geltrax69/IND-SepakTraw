@@ -9,6 +9,8 @@ import { ProductGrid } from './features/products/ProductGrid';
 import { FooterGrid } from './features/footer/FooterGrid';
 import { StfiPortalModal } from './features/stfi/StfiPortalModal';
 
+import { SponsorsStrip } from './features/moments/SponsorsStrip';
+
 function App() {
   const [isStfiModalOpen, setIsStfiModalOpen] = useState(false);
   const [initialPortalTab, setInitialPortalTab] = useState('overview');
@@ -51,6 +53,7 @@ function App() {
             <ProductGrid
               onOpenPortal={handleOpenStfiPortal}
             />
+            <SponsorsStrip />
           </main>
 
           {/* Site Footer */}

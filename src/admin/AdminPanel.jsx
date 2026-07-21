@@ -1,11 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useContent } from '../content/ContentContext';
-
-// ponytail: ONE recursive editor renders every content shape (object / array /
-// primitive). No per-field forms — the content object's own shape drives the UI, so
-// "edit anything to anything" is free. Each section edits only its own slice via
-// setSection, so modules never clash.
+import { extractXPostData } from '../utils/xEmbed';
+import {
+  AutoAwesome as Sparkles,
+  Verified as CheckCircle2,
+  PlayArrow as Play,
+  Launch as ExternalLink,
+  Delete as Trash2,
+  ArrowUpward as ArrowUp,
+  ArrowDownward as ArrowDown,
+} from '@mui/icons-material';
 
 const SECTIONS = [
   ['meta', 'Site Identity'],
@@ -13,6 +18,7 @@ const SECTIONS = [
   ['featuredEvent', 'Countdown Banner'],
   ['stats', 'Stat Strip'],
   ['highlights', 'News & Moments'],
+  ['xPosts', 'X Posts & Social Embeds ⚡'],
   ['nav', 'Navigation'],
   ['categories', 'Category Tiles'],
   ['notices', 'Notices & News'],
@@ -30,7 +36,6 @@ const isLong = (k, v) =>
   typeof v === 'string' &&
   (v.length > 60 || /desc|description|subtitle|note|title/i.test(k));
 
-// Build a blank clone of a sample value (for "add item").
 function blank(sample) {
   if (Array.isArray(sample)) return [];
   if (sample && typeof sample === 'object') {
@@ -115,6 +120,140 @@ function ArrayEditor({ label, value, onChange }) {
   );
 }
 
+// Specialized X (Twitter) Post Automatic Extractor Manager
+function XPostsManager({ posts = [], onChange, onFlash }) {
+  const [urlInput, setUrlInput] = useState('');
+  const [customText, setCustomText] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleExtractAndAdd = async () => {
+    if (!urlInput.trim()) return;
+    setLoading(true);
+    try {
+      const extracted = await extractXPostData(urlInput, customText);
+      onChange([extracted, ...posts]);
+      setUrlInput('');
+      setCustomText('');
+      onFlash('X Post extracted & added ✓');
+    } catch (err) {
+      onFlash('Failed to extract X post data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removePost = (id) => {
+    onChange(posts.filter((p) => p.id !== id));
+    onFlash('Removed post ✓');
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      {/* Quick Extractor Card */}
+      <div style={{ backgroundColor: '#fff', padding: 24, borderRadius: 12, border: '2px solid #1d9bf0', boxShadow: '0 4px 12px rgba(29,155,240,0.1)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+          <Sparkles color="#1d9bf0" size={20} />
+          <h3 style={{ fontSize: 18, fontWeight: 800, margin: 0, color: '#111' }}>
+            Auto-Extract Post Details from X (Twitter)
+          </h3>
+        </div>
+
+        <p style={{ fontSize: 13, color: '#666', marginBottom: 16, lineHeight: 1.4 }}>
+          Paste any X post URL below (e.g. <code>https://x.com/Media_SAI/status/1552525191426609155?s=20</code> or <code>https://x.com/IndiaSportsHub/status/1903824150529265704?s=20</code>).
+          The system will automatically extract who uploaded it, post text, `#hashtags`, images, and attached playable video!
+        </p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <input
+            type="text"
+            placeholder="Paste X Post Link here (https://x.com/...)"
+            value={urlInput}
+            onChange={(e) => setUrlInput(e.target.value)}
+            style={{ ...S.input, fontSize: 15, padding: '12px 14px', border: '1px solid #1d9bf0' }}
+          />
+
+          <textarea
+            placeholder="Optional custom notes / caption override (leave blank to auto-extract)"
+            value={customText}
+            onChange={(e) => setCustomText(e.target.value)}
+            rows={2}
+            style={{ ...S.textarea, fontSize: 13 }}
+          />
+
+          <button
+            onClick={handleExtractAndAdd}
+            disabled={loading || !urlInput.trim()}
+            style={{
+              backgroundColor: '#1d9bf0',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 8,
+              padding: '12px 20px',
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: loading ? 'wait' : 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+            }}
+          >
+            {loading ? '⚡ Extracting details from X...' : '⚡ Extract & Publish to Home Page'}
+          </button>
+        </div>
+      </div>
+
+      {/* List of currently embedded X posts */}
+      <div>
+        <h3 style={{ fontSize: 16, fontWeight: 800, marginBottom: 14, color: '#111' }}>
+          Published X Feed Posts ({posts.length})
+        </h3>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {posts.map((post, i) => (
+            <div key={post.id || i} style={{ ...S.item, borderLeft: '4px solid #1d9bf0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ fontWeight: 700, fontSize: 15 }}>{post.authorName}</span>
+                  <span style={{ color: '#1d9bf0', fontSize: 13, fontFamily: 'monospace' }}>{post.authorHandle}</span>
+                  {post.isVideo && (
+                    <span style={{ backgroundColor: '#1d9bf0', color: '#fff', fontSize: 10, fontWeight: 800, padding: '2px 6px', borderRadius: 4 }}>
+                      VIDEO ATTACHED 🎬
+                    </span>
+                  )}
+                </div>
+
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <a href={post.url} target="_blank" rel="noreferrer" style={{ fontSize: 12, color: '#1d9bf0', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4 }}>
+                    View on X <ExternalLink size={12} />
+                  </a>
+                  <button style={{ ...S.miniBtn, color: '#c0392b' }} onClick={() => removePost(post.id)}>
+                    <Trash2 size={13} /> Delete
+                  </button>
+                </div>
+              </div>
+
+              <p style={{ fontSize: 14, color: '#333', lineHeight: 1.5, marginBottom: 10 }}>
+                {post.text}
+              </p>
+
+              {post.hashtags && post.hashtags.length > 0 && (
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {post.hashtags.map((tag, idx) => (
+                    <span key={idx} style={{ fontSize: 11, fontWeight: 700, color: '#1d9bf0', backgroundColor: '#eef7fe', padding: '2px 8px', borderRadius: 4 }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function AdminPanel() {
   const { content, setSection, reset, exportJSON, importJSON } = useContent();
   const [active, setActive] = useState('meta');
@@ -178,7 +317,15 @@ export function AdminPanel() {
         </header>
 
         <div style={S.editor}>
-          <ValueEditor label={active} value={content[active]} onChange={(nv) => setSection(active, nv)} />
+          {active === 'xPosts' ? (
+            <XPostsManager
+              posts={content.xPosts || []}
+              onChange={(np) => setSection('xPosts', np)}
+              onFlash={flash}
+            />
+          ) : (
+            <ValueEditor label={active} value={content[active]} onChange={(nv) => setSection(active, nv)} />
+          )}
         </div>
       </main>
     </div>

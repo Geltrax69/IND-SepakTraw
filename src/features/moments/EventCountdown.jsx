@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CalendarDays, MapPin } from 'lucide-react';
+import { Event as CalendarDays, Room as MapPin } from '@mui/icons-material';
 import { Img } from '../../components/ui/Img';
 import { useContent } from '../../content/ContentContext';
 

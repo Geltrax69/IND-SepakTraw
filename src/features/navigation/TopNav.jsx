@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, Menu, X, ShieldCheck } from 'lucide-react';
+import { KeyboardArrowDown as ChevronDown, Menu as MenuIcon, Close as CloseIcon, VerifiedUser as ShieldCheck } from '@mui/icons-material';
 import { StfiLogo } from '../../components/ui/StfiLogo';
 import { useContent } from '../../content/ContentContext';
 
@@ -142,7 +142,7 @@ export const TopNav = ({ onOpenStfiPortal, onSelectNav }) => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
           >
-            {mobileMenuOpen ? <X size={24} color="var(--color-obsidian)" /> : <Menu size={24} color="var(--color-obsidian)" />}
+            {mobileMenuOpen ? <CloseIcon style={{ fontSize: 26, color: 'var(--color-obsidian)' }} /> : <MenuIcon style={{ fontSize: 26, color: 'var(--color-obsidian)' }} />}
           </button>
         </div>
       </div>

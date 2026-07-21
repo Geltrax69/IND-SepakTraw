@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { X, ShieldCheck, FileText, Calendar, Award, ExternalLink, ChevronRight, Mail, MapPin } from 'lucide-react';
-import { STFI_MYAS_28_SECTIONS, STFI_EVENTS, STFI_RULES_DATA } from '../../data/nikeData';
 import { PillButton } from '../../components/ui/PillButton';
+import { useContent } from '../../content/ContentContext';
 
 export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) => {
+  const { content } = useContent();
+  const STFI_MYAS_28_SECTIONS = content.myas;
+  const STFI_EVENTS = content.events;
+  const STFI_RULES_DATA = content.rules;
   const [activeTab, setActiveTab] = useState(initialTab);
 
   useEffect(() => {
@@ -117,13 +121,13 @@ export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) =>
 
             <div>
               <a
-                href="https://sepaktakrawindia.com/"
+                href={content.meta.externalSite}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-pill btn-obsidian"
                 style={{ display: 'inline-flex', gap: '8px', alignItems: 'center' }}
               >
-                <span>Visit sepaktakrawindia.com</span>
+                <span>Visit {content.meta.externalSite.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span>
                 <ExternalLink size={16} />
               </a>
             </div>
@@ -220,8 +224,8 @@ export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) =>
                 Under the Right to Information Act, citizens may file RTI applications regarding federation disclosures, grants, or selection criteria.
               </p>
               <div style={{ marginTop: '12px', fontSize: '14px', fontWeight: 600, color: 'var(--color-obsidian)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div>Public Information Officer: Sh. Executive Secretary, STFI</div>
-                <div>Official Email: rti@sepaktrawindia.com</div>
+                <div>Public Information Officer: {content.contact.rtiOfficer}</div>
+                <div>Official Email: {content.contact.rtiEmail}</div>
               </div>
             </div>
 

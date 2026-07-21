@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { ChevronDown, Menu, X, ShieldCheck } from 'lucide-react';
 import { StfiLogo } from '../../components/ui/StfiLogo';
-import { STFI_NAVIGATION_ITEMS } from '../../data/nikeData';
+import { useContent } from '../../content/ContentContext';
 
 export const TopNav = ({ onOpenStfiPortal, onSelectNav }) => {
+  const { content } = useContent();
+  const STFI_NAVIGATION_ITEMS = content.nav;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
@@ -14,7 +16,7 @@ export const TopNav = ({ onOpenStfiPortal, onSelectNav }) => {
         <div className="max-width-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ fontWeight: 600, letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <ShieldCheck size={14} />
-            <span>SEPAKTAKRAW FEDERATION OF INDIA — Recognized National Sports Federation (MYAS / ISTAF / ASTAF)</span>
+            <span>{content.meta.orgName.toUpperCase()} — {content.meta.tagline}</span>
           </div>
           <div style={{ display: 'flex', gap: '16px', alignItems: 'center', fontWeight: 500 }}>
             <button
@@ -61,19 +63,21 @@ export const TopNav = ({ onOpenStfiPortal, onSelectNav }) => {
                 style={{
                   background: 'none',
                   border: 'none',
+                  borderBottom: `2px solid ${activeDropdown === item.id ? 'var(--color-accent)' : 'transparent'}`,
                   fontFamily: 'var(--font-helvetica-now-text)',
                   fontSize: '15px',
                   fontWeight: 600,
-                  color: 'var(--color-obsidian)',
-                  padding: '10px 4px',
+                  color: activeDropdown === item.id ? 'var(--color-accent)' : 'var(--color-obsidian)',
+                  padding: '10px 2px',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '5px'
+                  gap: '5px',
+                  transition: 'color 0.15s ease, border-color 0.15s ease'
                 }}
               >
                 <span>{item.label}</span>
-                {item.children && <ChevronDown size={14} color="var(--color-steel)" />}
+                {item.children && <ChevronDown size={14} color={activeDropdown === item.id ? 'var(--color-accent)' : 'var(--color-steel)'} />}
               </button>
 
               {/* Submenu Dropdown */}

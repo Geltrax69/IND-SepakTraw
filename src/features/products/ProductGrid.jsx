@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { STFI_NOTICES, STFI_RULES_DATA } from '../../data/nikeData';
 import { FileText, Download, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { PillButton } from '../../components/ui/PillButton';
+import { useContent } from '../../content/ContentContext';
 
 export const ProductGrid = ({ onOpenPortal }) => {
+  const { content } = useContent();
+  const STFI_NOTICES = content.notices;
+  const STFI_RULES_DATA = content.rules;
   const [activeTab, setActiveTab] = useState('notices');
 
   return (
@@ -11,17 +14,10 @@ export const ProductGrid = ({ onOpenPortal }) => {
       <div className="max-width-container">
         {/* Section Header & Tab Switcher */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '36px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '12px' }}>
-            <div>
-              <span className="label-uppercase" style={{ color: 'var(--color-steel)' }}>Official Federation Documentation</span>
-              <h2 className="heading-lg" style={{ fontSize: '32px', marginTop: '4px' }}>
-                Notices, Rules & Results
-              </h2>
-            </div>
-            <PillButton variant="obsidian" size="sm" onClick={() => onOpenPortal('myas')}>
-              View MYAS 28 Disclosures
-            </PillButton>
-          </div>
+          <h2 className="section-title-center">
+            Notices, Rules &amp; Results
+            <span className="accent-bar" />
+          </h2>
 
           {/* Filter Tabs */}
           <div style={{ display: 'flex', gap: '10px', borderBottom: '1px solid var(--color-concrete-gray)', paddingBottom: '12px' }}>
@@ -66,6 +62,7 @@ export const ProductGrid = ({ onOpenPortal }) => {
                 key={notice.id}
                 style={{
                   border: '1px solid var(--color-concrete-gray)',
+                  borderTop: '3px solid var(--color-accent)',
                   padding: '28px',
                   backgroundColor: 'var(--surface-paper-white)',
                   display: 'flex',

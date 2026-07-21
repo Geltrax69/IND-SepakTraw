@@ -1,8 +1,12 @@
 import React from 'react';
-import { STFI_FOOTER_COLUMNS } from '../../data/nikeData';
+import { Link } from 'react-router-dom';
 import { Award, Mail, Phone, MapPin } from 'lucide-react';
+import { useContent } from '../../content/ContentContext';
 
 export const FooterGrid = ({ onOpenStfiPortal, onSelectNav }) => {
+  const { content } = useContent();
+  const STFI_FOOTER_COLUMNS = content.footerColumns;
+  const contact = content.contact;
   return (
     <footer
       className="hairline-border-top"
@@ -76,17 +80,17 @@ export const FooterGrid = ({ onOpenStfiPortal, onSelectNav }) => {
         {/* Federation Contact & Address Bar */}
         <div style={{ padding: '24px', backgroundColor: 'var(--surface-soft-mist)', borderRadius: '4px', marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <h4 style={{ fontWeight: 700, fontSize: '15px', marginBottom: '4px' }}>SepakTakraw Federation of India (STFI) Office</h4>
-            <p style={{ fontSize: '13px', color: 'var(--color-steel)' }}>Official Portal for National Championships, MYAS Disclosures & Selection Trials</p>
+            <h4 style={{ fontWeight: 700, fontSize: '15px', marginBottom: '4px' }}>{contact.officeName}</h4>
+            <p style={{ fontSize: '13px', color: 'var(--color-steel)' }}>{contact.officeNote}</p>
           </div>
           <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', fontSize: '13px', fontWeight: 600 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <Mail size={16} />
-              <span>stfi@sepaktrawindia.com</span>
+              <span>{contact.email}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <MapPin size={16} />
-              <span>New Delhi, India</span>
+              <span>{contact.location}</span>
             </div>
           </div>
         </div>
@@ -116,6 +120,7 @@ export const FooterGrid = ({ onOpenStfiPortal, onSelectNav }) => {
             <button onClick={() => onOpenStfiPortal('governance')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>RTI Public Officer</button>
             <button onClick={() => onOpenStfiPortal('rules')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>Playing Rules</button>
             <button onClick={() => onOpenStfiPortal('governance')} style={{ background: 'none', border: 'none', color: 'var(--color-steel)', cursor: 'pointer' }}>Elections 2024-2028</button>
+            <Link to="/admin" style={{ color: 'var(--color-steel)', textDecoration: 'none' }}>Admin</Link>
           </div>
         </div>
       </div>

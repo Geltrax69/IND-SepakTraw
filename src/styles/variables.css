@@ -7,6 +7,19 @@
   --color-steel: #707072;
   --color-faint-gray: #9e9ea0;
 
+  /* Brand palette — drawn from the STFI logo & takraw ball (yellow + green + red) */
+  --brand-green: #0B7A3B;        /* woven-ball stripe / court */
+  --brand-green-dark: #075C2C;
+  --brand-yellow: #FFC72C;       /* takraw ball / highlight */
+  --brand-yellow-deep: #E0A400;
+  --brand-red: #E4002B;          /* logo sunburst / urgent-live */
+  --brand-sand: #FBF7EC;         /* warm rattan off-white section bg */
+
+  /* Accent = green (aliases kept so existing usage keeps working) */
+  --color-accent: var(--brand-green);
+  --color-accent-strong: var(--brand-green-dark);
+  --color-accent-soft: #E8F1EC;
+
   /* Typography — Font Families with Clear Hierarchy */
   --font-nike-futura-nd: 'Oswald', 'Impact', 'Futura', sans-serif;
   --font-helvetica-now-display-medium: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;

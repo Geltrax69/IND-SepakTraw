@@ -1,13 +1,18 @@
 import React from 'react';
-import { CATEGORY_TILES } from '../../data/nikeData';
 import { PillButton } from '../../components/ui/PillButton';
+import { Img } from '../../components/ui/Img';
+import { Reveal } from '../../components/ui/Motion';
+import { useContent } from '../../content/ContentContext';
 
 export const CategoryGrid = ({ onOpenPortal, onSelectNav }) => {
+  const { content } = useContent();
+  const CATEGORY_TILES = content.categories;
   return (
     <section style={{ backgroundColor: 'var(--surface-paper-white)', padding: '60px 0' }}>
-      <div className="max-width-container" style={{ marginBottom: '24px' }}>
-        <h2 className="heading-sm" style={{ textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
-          Federation Pillars & Portals
+      <div className="max-width-container" style={{ marginBottom: '36px' }}>
+        <h2 className="section-title-center">
+          Federation Pillars
+          <span className="accent-bar" />
         </h2>
       </div>
 
@@ -23,9 +28,10 @@ export const CategoryGrid = ({ onOpenPortal, onSelectNav }) => {
           padding: '0 24px'
         }}
       >
-        {CATEGORY_TILES.map(tile => (
-          <div
+        {CATEGORY_TILES.map((tile, i) => (
+          <Reveal
             key={tile.id}
+            delay={0.08 * i}
             style={{
               position: 'relative',
               height: '440px',
@@ -35,14 +41,12 @@ export const CategoryGrid = ({ onOpenPortal, onSelectNav }) => {
               cursor: 'pointer'
             }}
             onClick={() => {
-              if (tile.id === 'cat-myas') onOpenPortal('myas');
-              else if (tile.id === 'cat-rules') onOpenPortal('rules');
-              else if (tile.id === 'cat-events') onOpenPortal('events');
-              else onSelectNav('notice');
+              if (['myas', 'rules', 'events'].includes(tile.target)) onOpenPortal(tile.target);
+              else onSelectNav(tile.target || 'notice');
             }}
           >
             {/* Edge to edge Image */}
-            <img
+            <Img
               src={tile.image}
               alt={tile.title}
               style={{
@@ -92,7 +96,7 @@ export const CategoryGrid = ({ onOpenPortal, onSelectNav }) => {
                 </PillButton>
               </div>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

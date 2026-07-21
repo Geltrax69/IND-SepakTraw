@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { CartProvider } from './context/CartContext';
-import { SearchFilterProvider } from './context/SearchFilterContext';
 import { TopNav } from './features/navigation/TopNav';
 import { EditorialHero } from './features/hero/EditorialHero';
+import { EventCountdown } from './features/moments/EventCountdown';
+import { StatsStrip } from './features/moments/StatsStrip';
+import { MomentsShowcase } from './features/moments/MomentsShowcase';
 import { CategoryGrid } from './features/categories/CategoryGrid';
 import { ProductGrid } from './features/products/ProductGrid';
 import { FooterGrid } from './features/footer/FooterGrid';
@@ -27,8 +28,6 @@ function App() {
   };
 
   return (
-    <CartProvider>
-      <SearchFilterProvider>
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--surface-paper-white)' }}>
           {/* Uncluttered Federation Header */}
           <TopNav onOpenStfiPortal={handleOpenStfiPortal} onSelectNav={handleSelectNav} />
@@ -38,6 +37,12 @@ function App() {
             <EditorialHero
               onOpenStfiPortal={handleOpenStfiPortal}
               onExploreRules={() => handleOpenStfiPortal('rules')}
+            />
+            <EventCountdown onOpenPortal={handleOpenStfiPortal} />
+            <StatsStrip />
+            <MomentsShowcase
+              onOpenPortal={handleOpenStfiPortal}
+              onSelectNav={handleSelectNav}
             />
             <CategoryGrid
               onOpenPortal={handleOpenStfiPortal}
@@ -61,8 +66,6 @@ function App() {
             initialTab={initialPortalTab}
           />
         </div>
-      </SearchFilterProvider>
-    </CartProvider>
   );
 }
 

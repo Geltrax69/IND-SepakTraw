@@ -115,6 +115,170 @@ body {
   border-top: 1px solid var(--color-concrete-gray);
 }
 
+/* Responsive Nav — fixes the desktop-nav + mobile-drawer duplication.
+   Inline styles set display:flex, so we override with !important at the breakpoint. */
+.mobile-toggle { display: none; }
+@media (max-width: 960px) {
+  .desktop-categories { display: none !important; }
+  .mobile-toggle { display: inline-flex !important; }
+}
+
+/* Accent eyebrow label */
+.eyebrow {
+  font-family: var(--font-helvetica-now-text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  background: var(--color-accent);
+  display: inline-block;
+}
+
+/* Trust chips (MYAS / ISTAF / ASTAF) */
+.trust-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-paper-white);
+  backdrop-filter: blur(4px);
+}
+
+.btn-accent {
+  background-color: var(--color-accent);
+  color: var(--color-paper-white);
+}
+
+.btn-yellow {
+  background-color: var(--brand-yellow);
+  color: var(--color-obsidian);
+}
+
+/* Live / urgent badge */
+.badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--brand-red);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.badge-live::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.section-sand { background-color: var(--brand-sand); }
+
+/* Moments / news showcase (FIFA-style lead + story grid) */
+.moment-lead {
+  position: relative;
+  min-height: 460px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+}
+.moment-lead img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+.moment-lead:hover img { transform: scale(1.05); }
+.moment-lead .veil { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,8,0.92) 0%, rgba(10,10,8,0.35) 55%, rgba(10,10,8,0.05) 100%); }
+
+.moment-card {
+  position: relative;
+  min-height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+}
+.moment-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.moment-card:hover img { transform: scale(1.06); }
+.moment-card .veil { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,8,0.9) 0%, rgba(10,10,8,0.15) 70%); }
+
+.kicker {
+  display: inline-block;
+  background: var(--brand-yellow);
+  color: var(--color-obsidian);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 4px;
+}
+
+/* Bold centered section title (ISTAF "GET IN THE ZONE" style) */
+.section-title-center {
+  text-align: center;
+  font-family: var(--font-nike-futura-nd);
+  font-size: clamp(30px, 5vw, 52px);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--color-obsidian);
+}
+.section-title-center .accent-bar {
+  display: block;
+  width: 64px;
+  height: 4px;
+  background: var(--brand-yellow);
+  margin: 18px auto 0;
+}
+
+/* Countdown flip blocks */
+.count-block {
+  min-width: 74px;
+  padding: 12px 8px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 8px;
+  text-align: center;
+  backdrop-filter: blur(3px);
+}
+.count-num {
+  font-family: var(--font-nike-futura-nd);
+  font-size: clamp(32px, 6vw, 54px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--brand-yellow);
+  font-variant-numeric: tabular-nums;
+}
+.count-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.8;
+  margin-top: 6px;
+}
+
 /* Custom Scrollbar for Horizontal Grids */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -150,4 +314,43 @@ body {
 
 .animate-modal {
   animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ---- Motion system ----
+   All entrance motion is opt-in via prefers-reduced-motion: no-preference, so users
+   who ask for less get content instantly visible (nothing stays at opacity 0).
+   Only transform/opacity are animated (GPU-composited, no layout thrash). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translate3d(0, 18px, 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+
+  /* Hero: stagger direct children on load */
+  .hero-stagger > * { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .hero-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+  .hero-stagger > *:nth-child(2) { animation-delay: 0.15s; }
+  .hero-stagger > *:nth-child(3) { animation-delay: 0.25s; }
+  .hero-stagger > *:nth-child(4) { animation-delay: 0.35s; }
+  .hero-stagger > *:nth-child(5) { animation-delay: 0.45s; }
+  .hero-stagger > *:nth-child(6) { animation-delay: 0.55s; }
+
+  /* Scroll reveal (JS toggles .in) */
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+}
+
+/* Micro-interaction: pill buttons lift on hover, press down on click */
+.btn-pill { transition: opacity 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; }
+.btn-pill:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.16); }
+.btn-pill:active { transform: translateY(0) scale(0.98); box-shadow: none; }
+
+/* Countdown seconds: gentle tick when the value changes */
+@media (prefers-reduced-motion: no-preference) {
+  .count-tick { animation: tick 0.5s ease; }
+  @keyframes tick { 0% { transform: scale(1.12); } 100% { transform: scale(1); } }
 }

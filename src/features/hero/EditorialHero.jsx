@@ -1,19 +1,24 @@
 import React from 'react';
+import { ShieldCheck } from 'lucide-react';
 import { PillButton } from '../../components/ui/PillButton';
-import { STFI_HERO_DATA } from '../../data/nikeData';
+import { Img } from '../../components/ui/Img';
+import { useContent } from '../../content/ContentContext';
 
 export const EditorialHero = ({ onOpenStfiPortal, onExploreRules }) => {
+  const { content } = useContent();
+  const STFI_HERO_DATA = content.hero;
   return (
     <section
       style={{
         backgroundColor: 'var(--color-obsidian)',
         color: 'var(--color-paper-white)',
-        minHeight: '80vh',
+        minHeight: '90vh',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
-        padding: '64px 24px',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '96px 24px',
         overflow: 'hidden'
       }}
     >
@@ -32,7 +37,7 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreRules }) => {
           justifyContent: 'center'
         }}
       >
-        <img
+        <Img
           src={STFI_HERO_DATA.heroImage}
           alt="SepakTakraw India Championship Action"
           style={{
@@ -47,63 +52,61 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreRules }) => {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(to top, rgba(17, 17, 17, 0.95) 0%, rgba(17, 17, 17, 0.45) 55%, rgba(17, 17, 17, 0.15) 100%)'
+            background: 'linear-gradient(to top, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.55) 50%, rgba(17,17,17,0.55) 100%)'
           }}
         />
       </div>
 
-      {/* Hero Content Overlay */}
+      {/* Hero Content — bold, centered (ISTAF-style) */}
       <div
-        className="max-width-container"
+        className="hero-stagger"
         style={{
           position: 'relative',
           zIndex: 2,
           width: '100%',
+          maxWidth: 980,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: '16px'
+          alignItems: 'center',
+          textAlign: 'center',
+          gap: '18px'
         }}
       >
-        <span className="label-uppercase" style={{ color: 'var(--color-concrete-gray)', letterSpacing: '0.12em' }}>
+        <span className="eyebrow" style={{ color: 'var(--brand-yellow)' }}>
           {STFI_HERO_DATA.bannerTag}
         </span>
 
-        <h1 className="display-headline" style={{ maxWidth: '960px' }}>
+        <h1
+          className="display-headline"
+          style={{ fontSize: 'clamp(48px, 9vw, 108px)', whiteSpace: 'pre-line', margin: 0 }}
+        >
           {STFI_HERO_DATA.title}
         </h1>
 
-        <p
-          style={{
-            fontSize: '18px',
-            lineHeight: 1.5,
-            maxWidth: '640px',
-            color: 'var(--surface-soft-mist)',
-            fontWeight: 400
-          }}
-        >
+        {STFI_HERO_DATA.tagline && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, color: 'var(--brand-yellow)' }}>
+            <span style={{ width: 40, height: 2, background: 'var(--brand-yellow)' }} />
+            <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: '0.28em', textTransform: 'uppercase' }}>
+              {STFI_HERO_DATA.tagline}
+            </span>
+            <span style={{ width: 40, height: 2, background: 'var(--brand-yellow)' }} />
+          </div>
+        )}
+
+        <p style={{ fontSize: '18px', lineHeight: 1.55, maxWidth: '640px', color: 'var(--surface-soft-mist)', fontWeight: 400 }}>
           {STFI_HERO_DATA.subtitle}
         </p>
 
-        <div style={{ display: 'flex', gap: '12px', marginTop: '12px', flexWrap: 'wrap' }}>
-          <PillButton
-            variant="paper"
-            onClick={onExploreRules}
-          >
-            Explore Playing Rules
-          </PillButton>
-          <PillButton
-            variant="obsidian"
-            style={{ border: '1px solid var(--color-paper-white)' }}
-            onClick={() => onOpenStfiPortal('myas')}
-          >
-            MYAS Disclosures (28)
-          </PillButton>
-          <PillButton
-            variant="obsidian"
-            style={{ border: '1px solid var(--color-concrete-gray)' }}
-            onClick={() => onOpenStfiPortal('events')}
-          >
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '4px' }}>
+          <span className="trust-chip"><ShieldCheck size={13} /> MYAS Recognized</span>
+          <span className="trust-chip">ISTAF Member</span>
+          <span className="trust-chip">ASTAF Affiliated</span>
+        </div>
+
+        <div style={{ display: 'flex', gap: '12px', marginTop: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <button className="btn-pill btn-yellow" onClick={onExploreRules}>Explore Playing Rules</button>
+          <button className="btn-pill btn-accent" onClick={() => onOpenStfiPortal('myas')}>MYAS Disclosures (28)</button>
+          <PillButton variant="obsidian" style={{ border: '1px solid rgba(255,255,255,0.4)' }} onClick={() => onOpenStfiPortal('events')}>
             Event Calendar 2026
           </PillButton>
         </div>

@@ -5,14 +5,15 @@ import { useContent } from '../../content/ContentContext';
 
 // ponytail: one interval, plain Date math. No date lib for a countdown.
 function diff(target) {
-  const ms = Math.max(0, new Date(target).getTime() - Date.now());
+  const rawMs = new Date(target).getTime() - Date.now();
+  const ms = Math.max(0, rawMs);
   const s = Math.floor(ms / 1000);
   return {
     days: Math.floor(s / 86400),
     hours: Math.floor((s % 86400) / 3600),
     mins: Math.floor((s % 3600) / 60),
     secs: s % 60,
-    done: ms === 0,
+    elapsed: rawMs <= 0, // target date is now or in the past
   };
 }
 
@@ -51,14 +52,20 @@ export const EventCountdown = ({ onOpenPortal }) => {
           )}
         </div>
 
-        <div style={{ display: 'flex', gap: 12 }}>
-          {blocks.map(([label, val]) => (
-            <div key={label} className="count-block">
-              <div key={val} className="count-num count-tick">{String(val).padStart(2, '0')}</div>
-              <div className="count-label">{label}</div>
-            </div>
-          ))}
-        </div>
+        {t.elapsed ? (
+          <div className="count-block" style={{ padding: '18px 24px' }}>
+            <div className="count-label" style={{ fontSize: 13, opacity: 1 }}>Event Concluded</div>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', gap: 12 }}>
+            {blocks.map(([label, val]) => (
+              <div key={label} className="count-block">
+                <div key={val} className="count-num count-tick">{String(val).padStart(2, '0')}</div>
+                <div className="count-label">{label}</div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

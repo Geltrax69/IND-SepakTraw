@@ -6,11 +6,9 @@ import {
   Event as Calendar,
   EmojiEvents as Award,
   Launch as ExternalLink,
-  ChevronRight,
-  Email as Mail,
-  Room as MapPin,
   GetApp as DownloadIcon,
-  Policy as PolicyIcon,
+  Search as SearchIcon,
+  CheckCircle as CheckIcon
 } from '@mui/icons-material';
 import { useContent } from '../../content/ContentContext';
 
@@ -19,7 +17,10 @@ export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) =>
   const STFI_MYAS_28_SECTIONS = content.myas || [];
   const STFI_EVENTS = content.events || [];
   const STFI_RULES_DATA = content.rules || [];
+
   const [activeTab, setActiveTab] = useState(initialTab);
+  const [modalSearch, setModalSearch] = useState('');
+  const [toastMessage, setToastMessage] = useState(null);
 
   useEffect(() => {
     if (initialTab) setActiveTab(initialTab);
@@ -27,38 +28,50 @@ export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) =>
 
   if (!isOpen) return null;
 
+  const triggerDownload = (title) => {
+    setToastMessage(`Downloading official document: ${title}`);
+    setTimeout(() => setToastMessage(null), 3500);
+  };
+
+  const filteredMyas = STFI_MYAS_28_SECTIONS.filter(
+    (item) =>
+      item.title.toLowerCase().includes(modalSearch.toLowerCase()) ||
+      item.desc.toLowerCase().includes(modalSearch.toLowerCase()) ||
+      String(item.id).includes(modalSearch)
+  );
+
   return (
     <div
       className="animate-fade-in"
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.88)',
-        backdropFilter: 'blur(10px)',
-        zIndex: 9990,
+        backgroundColor: 'rgba(5, 6, 9, 0.88)',
+        backdropFilter: 'blur(12px)',
+        zIndex: 9995,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '20px',
+        padding: '16px',
       }}
       onClick={onClose}
     >
       <div
         className="animate-modal"
         style={{
-          backgroundColor: '#121215',
+          backgroundColor: '#12141c',
           color: '#ffffff',
           width: '100%',
-          maxWidth: '980px',
-          maxHeight: '90vh',
+          maxWidth: '1020px',
+          maxHeight: '92vh',
           overflowY: 'auto',
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
-          padding: '36px',
-          borderRadius: '20px',
-          border: '1px solid #282830',
-          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9)',
+          padding: ' clamp(24px, 4vw, 40px)',
+          borderRadius: '24px',
+          border: '1px solid #282c3c',
+          boxShadow: '0 30px 80px rgba(0, 0, 0, 0.95)',
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -79,52 +92,59 @@ export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) =>
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            zIndex: 10,
-            transition: 'background-color 0.2s ease',
+            zIndex: 20,
+            transition: 'all 0.2s ease',
           }}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)'}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffc72c';
+            e.currentTarget.style.color = '#0a0a0b';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+            e.currentTarget.style.color = '#fff';
+          }}
         >
-          <X style={{ fontSize: 20 }} />
+          <X style={{ fontSize: 22 }} />
         </button>
 
         {/* Modal Header */}
-        <div style={{ marginBottom: '28px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-            <Award style={{ fontSize: 24, color: 'var(--brand-yellow)' }} />
-            <span style={{ fontSize: '12px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--brand-yellow)' }}>
-              Official Federation Disclosure Portal
+        <div style={{ marginBottom: '24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+            <Award style={{ fontSize: 24, color: '#ffc72c' }} />
+            <span style={{ fontSize: '12px', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#ffc72c' }}>
+              Official Federation Quick Disclosure Portal
             </span>
           </div>
-          <h2 style={{ fontSize: 'clamp(26px, 4vw, 36px)', fontWeight: 800, margin: 0, fontFamily: 'var(--font-helvetica-now-display-medium)' }}>
+          <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 900, margin: 0, color: '#ffffff', textTransform: 'uppercase' }}>
             SepakTakraw Federation of India (STFI)
           </h2>
-          <p style={{ color: '#a0a0aa', fontSize: '14px', marginTop: '6px', lineHeight: 1.5 }}>
+          <p style={{ color: '#a0a5b5', fontSize: '14px', marginTop: '6px', lineHeight: 1.5 }}>
             Recognized National Sports Federation • Ministry of Youth Affairs &amp; Sports (MYAS) | Affiliated with ISTAF &amp; ASTAF
           </p>
         </div>
 
-        {/* Portal Navigation Tabs */}
-        <div style={{ display: 'flex', gap: '8px', borderBottom: '1px solid #24242c', paddingBottom: '14px', marginBottom: '28px', overflowX: 'auto', flexWrap: 'wrap' }}>
+        {/* Modal Tabs Navigation */}
+        <div style={{ display: 'flex', gap: '8px', borderBottom: '1px solid #222634', paddingBottom: '16px', marginBottom: '24px', overflowX: 'auto', flexWrap: 'nowrap' }}>
           {[
-            { id: 'overview', label: 'Overview & History' },
-            { id: 'myas', label: 'MYAS Compliance (28 Disclosures)' },
-            { id: 'rules', label: 'Rules & Regulations' },
+            { id: 'overview', label: 'Overview' },
+            { id: 'myas', label: 'MYAS 28 Disclosures' },
             { id: 'events', label: 'Championship Events' },
-            { id: 'governance', label: 'RTI & Elections 2024-2028' },
+            { id: 'rules', label: 'Playing Rules' },
+            { id: 'governance', label: 'RTI & Elections' },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               style={{
-                padding: '10px 22px',
+                padding: '10px 20px',
                 borderRadius: '30px',
-                border: activeTab === tab.id ? '1px solid var(--brand-yellow)' : '1px solid #282830',
-                backgroundColor: activeTab === tab.id ? 'var(--brand-yellow)' : 'rgba(255, 255, 255, 0.05)',
-                color: activeTab === tab.id ? '#0a0a0b' : '#d0d0d8',
+                border: activeTab === tab.id ? '1px solid #ffc72c' : '1px solid #282c3c',
+                backgroundColor: activeTab === tab.id ? '#ffc72c' : 'rgba(255, 255, 255, 0.05)',
+                color: activeTab === tab.id ? '#0a0a0b' : '#d0d5e0',
                 fontSize: '13.5px',
-                fontWeight: 700,
+                fontWeight: 800,
                 cursor: 'pointer',
+                whiteSpace: 'nowrap',
                 transition: 'all 0.2s ease',
               }}
             >
@@ -133,38 +153,33 @@ export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) =>
           ))}
         </div>
 
+        {/* Download Toast Notification inside modal */}
+        {toastMessage && (
+          <div style={{ backgroundColor: '#00a651', color: '#fff', padding: '12px 18px', borderRadius: '10px', marginBottom: '20px', fontSize: '13.5px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <CheckIcon style={{ fontSize: 18 }} />
+            <span>{toastMessage}</span>
+          </div>
+        )}
+
         {/* Tab 1: Overview */}
         {activeTab === 'overview' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            <p style={{ fontSize: '16px', lineHeight: 1.7, color: '#e0e0e8', margin: 0 }}>
-              The SepakTakraw Federation of India (STFI) is the recognized National Sports Federation governing the sport of SepakTakraw in India. STFI promotes grassroots development, selection of national teams, rules compliance, and representation at the Asian Games, World Championships, and Asian Championships.
+            <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: '#d0d5e0', margin: 0 }}>
+              The SepakTakraw Federation of India (STFI) is the National Governing Body recognized by the Ministry of Youth Affairs &amp; Sports (MYAS), Government of India, and affiliated with the International Sepaktakraw Federation (ISTAF) &amp; Asian Sepaktakraw Federation (ASTAF).
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px' }}>
-              <div style={{ padding: '24px', backgroundColor: '#18181c', borderRadius: '12px', border: '1px solid #282830' }}>
-                <ShieldCheck style={{ fontSize: 28, color: 'var(--brand-green)', marginBottom: '10px' }} />
-                <h4 style={{ fontWeight: 800, fontSize: '17px', marginBottom: '6px', margin: 0 }}>MYAS Recognition</h4>
-                <p style={{ fontSize: '13.5px', color: '#a0a0aa', lineHeight: 1.5, marginTop: 4 }}>Full compliance with National Sports Code 2011 and MYAS directives.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '18px' }}>
+              <div style={{ padding: '24px', backgroundColor: '#181b26', borderRadius: '14px', border: '1px solid #282c3c' }}>
+                <ShieldCheck style={{ fontSize: 32, color: '#00a651', marginBottom: '10px' }} />
+                <h4 style={{ fontWeight: 800, fontSize: '17px', margin: '0 0 6px 0', color: '#fff' }}>MYAS Recognition</h4>
+                <p style={{ fontSize: '13.5px', color: '#a0a5b5', lineHeight: 1.5, margin: 0 }}>100% compliance with National Sports Development Code 2011.</p>
               </div>
 
-              <div style={{ padding: '24px', backgroundColor: '#18181c', borderRadius: '12px', border: '1px solid #282830' }}>
-                <Award style={{ fontSize: 28, color: 'var(--brand-yellow)', marginBottom: '10px' }} />
-                <h4 style={{ fontWeight: 800, fontSize: '17px', marginBottom: '6px', margin: 0 }}>ISTAF &amp; ASTAF Affiliation</h4>
-                <p style={{ fontSize: '13.5px', color: '#a0a0aa', lineHeight: 1.5, marginTop: 4 }}>Official member of Asian &amp; International Sepaktakraw Federations.</p>
+              <div style={{ padding: '24px', backgroundColor: '#181b26', borderRadius: '14px', border: '1px solid #282c3c' }}>
+                <Award style={{ fontSize: 32, color: '#ffc72c', marginBottom: '10px' }} />
+                <h4 style={{ fontWeight: 800, fontSize: '17px', margin: '0 0 6px 0', color: '#fff' }}>ISTAF &amp; ASTAF Affiliation</h4>
+                <p style={{ fontSize: '13.5px', color: '#a0a5b5', lineHeight: 1.5, margin: 0 }}>Official voting member representing India at World Championships &amp; Asian Games.</p>
               </div>
-            </div>
-
-            <div>
-              <a
-                href={content.meta.externalSite}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-pill btn-yellow"
-                style={{ display: 'inline-flex', gap: '8px', alignItems: 'center', fontWeight: 700 }}
-              >
-                <span>Visit {content.meta.externalSite.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span>
-                <ExternalLink style={{ fontSize: 16 }} />
-              </a>
             </div>
           </div>
         )}
@@ -172,53 +187,60 @@ export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) =>
         {/* Tab 2: MYAS 28 Compliance Disclosures */}
         {activeTab === 'myas' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <h3 style={{ fontSize: '20px', fontWeight: 800, margin: 0, color: '#fff' }}>MYAS Mandatory Disclosures (28 Sections)</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: '16px' }}>
-              {STFI_MYAS_28_SECTIONS.map((item) => (
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: 800, margin: 0, color: '#fff' }}>MYAS Mandatory Disclosures (28 Sections)</h3>
+              <div style={{ position: 'relative', width: '280px' }}>
+                <SearchIcon style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#ffc72c', fontSize: 18 }} />
+                <input
+                  type="text"
+                  placeholder="Filter section..."
+                  value={modalSearch}
+                  onChange={(e) => setModalSearch(e.target.value)}
+                  style={{ width: '100%', backgroundColor: '#181b26', border: '1px solid #282c3c', borderRadius: '20px', padding: '8px 12px 8px 36px', color: '#fff', fontSize: '13px', outline: 'none' }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+              {filteredMyas.map((item) => (
                 <div
                   key={item.id}
                   style={{
                     padding: '20px',
-                    border: '1px solid #282832',
-                    borderRadius: '12px',
-                    backgroundColor: '#18181c',
+                    border: '1px solid #282c3c',
+                    borderRadius: '14px',
+                    backgroundColor: '#181b26',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    gap: '12px',
-                    transition: 'transform 0.2s ease, border-color 0.2s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-3px)';
-                    e.currentTarget.style.borderColor = 'var(--brand-yellow)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.borderColor = '#282832';
+                    gap: '14px',
                   }}
                 >
                   <div>
-                    <h4 style={{ fontSize: '15px', fontWeight: 800, color: '#ffffff', margin: '0 0 6px 0', lineHeight: 1.35 }}>{item.title}</h4>
-                    <p style={{ fontSize: '13px', color: '#a0a0aa', margin: 0, lineHeight: 1.5 }}>{item.desc}</p>
+                    <span style={{ fontSize: '11px', fontWeight: 800, color: '#ffc72c', textTransform: 'uppercase' }}>Section {item.id}</span>
+                    <h4 style={{ fontSize: '15px', fontWeight: 800, color: '#ffffff', margin: '4px 0 6px 0', lineHeight: 1.35 }}>{item.title}</h4>
+                    <p style={{ fontSize: '13px', color: '#a0a5b5', margin: 0, lineHeight: 1.5 }}>{item.desc}</p>
                   </div>
+
                   <button
-                    onClick={() => alert(`Downloading MYAS Section Document: ${item.title}`)}
+                    onClick={() => triggerDownload(item.title)}
                     style={{
-                      background: 'none',
-                      border: 'none',
-                      color: 'var(--brand-yellow)',
-                      fontWeight: 700,
-                      fontSize: '12.5px',
+                      backgroundColor: 'rgba(255, 199, 44, 0.12)',
+                      border: '1px solid rgba(255, 199, 44, 0.3)',
+                      color: '#ffc72c',
+                      borderRadius: '20px',
+                      padding: '8px 14px',
+                      fontWeight: 800,
+                      fontSize: '12px',
                       cursor: 'pointer',
-                      textAlign: 'left',
-                      display: 'flex',
+                      display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '4px',
-                      padding: 0,
+                      gap: '6px',
+                      width: 'fit-content',
                     }}
                   >
                     <DownloadIcon style={{ fontSize: 15 }} />
-                    <span>Download Official PDF Document</span>
+                    <span>Download PDF</span>
                   </button>
                 </div>
               ))}
@@ -226,23 +248,49 @@ export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) =>
           </div>
         )}
 
-        {/* Tab 3: Playing Rules */}
+        {/* Tab 3: Championship Events */}
+        {activeTab === 'events' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <h3 style={{ fontSize: '20px', fontWeight: 800, margin: 0, color: '#fff' }}>National Championship Calendar</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {STFI_EVENTS.map((evt) => (
+                <div key={evt.id} style={{ padding: '22px', border: '1px solid #282c3c', borderRadius: '14px', backgroundColor: '#181b26', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
+                  <div>
+                    <span style={{ fontSize: '11px', fontWeight: 800, color: '#ffc72c', textTransform: 'uppercase' }}>{evt.category}</span>
+                    <h4 style={{ fontWeight: 800, fontSize: '18px', margin: '4px 0 6px 0', color: '#fff' }}>{evt.name}</h4>
+                    <p style={{ fontSize: '13.5px', color: '#a0a5b5', margin: 0 }}>📍 {evt.venue} • {evt.events}</p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '13.5px', fontWeight: 800, color: '#ffc72c' }}>📅 {evt.dates}</span>
+                    <button
+                      onClick={() => triggerDownload(`${evt.name}_Circular.pdf`)}
+                      className="btn-pill btn-yellow btn-sm"
+                      style={{ fontWeight: 800 }}
+                    >
+                      Circular PDF
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Tab 4: Playing Rules */}
         {activeTab === 'rules' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <h3 style={{ fontSize: '20px', fontWeight: 800, margin: 0 }}>Official Playing Rules &amp; Formats</h3>
+            <h3 style={{ fontSize: '20px', fontWeight: 800, margin: 0, color: '#fff' }}>Official Playing Rules</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px' }}>
               {STFI_RULES_DATA.map((rule, idx) => (
-                <div key={idx} style={{ padding: '24px', border: '1px solid #282832', borderRadius: '12px', backgroundColor: '#18181c' }}>
-                  <h4 style={{ fontWeight: 800, fontSize: '17px', marginBottom: '6px', margin: 0 }}>{rule.title}</h4>
-                  <span style={{ fontSize: '12px', fontWeight: 800, color: 'var(--brand-yellow)', display: 'block', margin: '6px 0 10px 0', textTransform: 'uppercase' }}>
-                    {rule.players}
-                  </span>
-                  <p style={{ fontSize: '13.5px', color: '#a0a0aa', lineHeight: 1.5, margin: 0 }}>{rule.description}</p>
+                <div key={idx} style={{ padding: '24px', border: '1px solid #282c3c', borderRadius: '14px', backgroundColor: '#181b26' }}>
+                  <h4 style={{ fontWeight: 800, fontSize: '17px', margin: '0 0 6px 0', color: '#fff' }}>{rule.title}</h4>
+                  <div style={{ fontSize: '12px', fontWeight: 800, color: '#ffc72c', margin: '4px 0 10px 0' }}>{rule.players}</div>
+                  <p style={{ fontSize: '13.5px', color: '#a0a5b5', lineHeight: 1.5, margin: 0 }}>{rule.description}</p>
                   <button
-                    onClick={() => alert(`Downloading official PDF for ${rule.title}...`)}
-                    style={{ marginTop: '14px', background: 'none', border: 'none', color: '#ffffff', fontWeight: 700, fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', padding: 0 }}
+                    onClick={() => triggerDownload(rule.title)}
+                    style={{ marginTop: '16px', backgroundColor: '#ffc72c', color: '#0a0a0b', border: 'none', borderRadius: '20px', padding: '8px 16px', fontSize: '12px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
                   >
-                    <DownloadIcon style={{ fontSize: 16, color: 'var(--brand-yellow)' }} />
+                    <DownloadIcon style={{ fontSize: 15 }} />
                     <span>Download Rulebook PDF</span>
                   </button>
                 </div>
@@ -251,55 +299,18 @@ export const StfiPortalModal = ({ isOpen, onClose, initialTab = 'overview' }) =>
           </div>
         )}
 
-        {/* Tab 4: Events */}
-        {activeTab === 'events' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-            <h3 style={{ fontSize: '20px', fontWeight: 800, margin: 0 }}>National Championship Calendar</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {STFI_EVENTS.map((evt) => (
-                <div key={evt.id} style={{ padding: '22px', border: '1px solid #282832', borderRadius: '12px', backgroundColor: '#18181c', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
-                  <div>
-                    <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--brand-yellow)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{evt.category}</span>
-                    <h4 style={{ fontWeight: 800, fontSize: '18px', margin: '4px 0 6px 0' }}>{evt.name}</h4>
-                    <p style={{ fontSize: '13.5px', color: '#a0a0aa', margin: 0 }}>{evt.venue} • {evt.events}</p>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '14px', backgroundColor: 'rgba(255, 199, 44, 0.1)', border: '1px solid rgba(255, 199, 44, 0.25)', color: 'var(--brand-yellow)', padding: '10px 18px', borderRadius: '30px' }}>
-                    <Calendar style={{ fontSize: 18 }} />
-                    <span>{evt.dates}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Tab 5: Governance, RTI & Elections */}
+        {/* Tab 5: Governance */}
         {activeTab === 'governance' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-            <h3 style={{ fontSize: '20px', fontWeight: 800, margin: 0 }}>RTI &amp; Elections (2024–2028 Term)</h3>
-            <div style={{ padding: '24px', backgroundColor: '#18181c', borderRadius: '12px', border: '1px solid #282832' }}>
-              <h4 style={{ fontWeight: 800, fontSize: '17px', marginBottom: '8px', margin: 0 }}>RTI Public Information Officer</h4>
-              <p style={{ fontSize: '14px', color: '#a0a0aa', lineHeight: 1.6, marginTop: 6 }}>
-                Under the Right to Information Act, citizens may file RTI applications regarding federation disclosures, grants, or selection criteria.
+            <h3 style={{ fontSize: '20px', fontWeight: 800, margin: 0, color: '#fff' }}>RTI &amp; Executive Body Elections (2024–2028)</h3>
+            <div style={{ padding: '24px', backgroundColor: '#181b26', borderRadius: '14px', border: '1px solid #282c3c' }}>
+              <h4 style={{ fontWeight: 800, fontSize: '17px', margin: '0 0 8px 0', color: '#fff' }}>RTI Public Information Officer</h4>
+              <p style={{ fontSize: '14px', color: '#a0a5b5', lineHeight: 1.6, margin: 0 }}>
+                Under Section 4(1)(b) of the Right to Information Act, citizens may request certified records.
               </p>
-              <div style={{ marginTop: '14px', fontSize: '14px', fontWeight: 700, color: '#ffffff', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <div>Public Information Officer: {content.contact.rtiOfficer}</div>
-                <div>Official Email: {content.contact.rtiEmail}</div>
+              <div style={{ marginTop: '14px', fontSize: '14px', fontWeight: 700, color: '#ffffff' }}>
+                PIO: {content.contact.rtiOfficer} | Email: {content.contact.rtiEmail}
               </div>
-            </div>
-
-            <div style={{ padding: '24px', backgroundColor: '#18181c', borderRadius: '12px', border: '1px solid #282832' }}>
-              <h4 style={{ fontWeight: 800, fontSize: '17px', marginBottom: '8px', margin: 0 }}>Executive Body Elections 2024–2028</h4>
-              <p style={{ fontSize: '14px', color: '#a0a0aa', lineHeight: 1.6, marginTop: 6 }}>
-                View election notification, returning officer reports, electoral list, and nomination details.
-              </p>
-              <button
-                onClick={() => alert('Downloading STFI Electoral Roll & Election Guidelines PDF...')}
-                className="btn-pill btn-yellow btn-sm"
-                style={{ marginTop: '14px', fontWeight: 700 }}
-              >
-                Download Electoral Roll PDF
-              </button>
             </div>
           </div>
         )}

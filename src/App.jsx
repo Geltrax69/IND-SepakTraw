@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TopNav } from './features/navigation/TopNav';
 import { EditorialHero } from './features/hero/EditorialHero';
 import { EventCountdown } from './features/moments/EventCountdown';
@@ -8,12 +8,27 @@ import { CategoryGrid } from './features/categories/CategoryGrid';
 import { ProductGrid } from './features/products/ProductGrid';
 import { FooterGrid } from './features/footer/FooterGrid';
 import { StfiPortalModal } from './features/stfi/StfiPortalModal';
-
 import { SponsorsStrip } from './features/moments/SponsorsStrip';
 
+// Dedicated Page Views
+import { MyasCompliancePage } from './features/pages/MyasCompliancePage';
+import { ChampionshipEventsPage } from './features/pages/ChampionshipEventsPage';
+import { ContactUsPage } from './features/pages/ContactUsPage';
+import { RulesRegulationsPage } from './features/pages/RulesRegulationsPage';
+import { NoticeNewsPage } from './features/pages/NoticeNewsPage';
+
 function App() {
+  const [currentView, setCurrentView] = useState('home');
   const [isStfiModalOpen, setIsStfiModalOpen] = useState(false);
   const [initialPortalTab, setInitialPortalTab] = useState('overview');
+
+  // Handle URL hash / initial location mapping
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (['myas', 'events', 'contact', 'rules', 'notice'].includes(hash)) {
+      setCurrentView(hash);
+    }
+  }, []);
 
   const handleOpenStfiPortal = (tab = 'overview') => {
     setInitialPortalTab(tab);
@@ -21,26 +36,64 @@ function App() {
   };
 
   const handleSelectNav = (navId) => {
+    let targetView = 'home';
     if (['myas', 'rti', 'elections', 'history', 'antidoping', 'governance'].includes(navId)) {
-      handleOpenStfiPortal(navId === 'myas' ? 'myas' : navId === 'rules' ? 'rules' : navId === 'events' ? 'events' : 'governance');
-    } else {
-      const section = document.getElementById('stfi-content-section');
-      if (section) section.scrollIntoView({ behavior: 'smooth' });
+      targetView = 'myas';
+    } else if (['events', 'nationals', 'selection', 'camps', 'calendar'].includes(navId)) {
+      targetView = 'events';
+    } else if (['contact'].includes(navId)) {
+      targetView = 'contact';
+    } else if (['rules', 'rule-regu', 'rule-double', 'rule-quad', 'rule-beach'].includes(navId)) {
+      targetView = 'rules';
+    } else if (['notice', 'news', 'results', 'trials'].includes(navId)) {
+      targetView = 'notice';
     }
+
+    setCurrentView(targetView);
+    window.location.hash = targetView;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--surface-paper-white)' }}>
-          {/* Uncluttered Federation Header */}
-          <TopNav onOpenStfiPortal={handleOpenStfiPortal} onSelectNav={handleSelectNav} />
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#0b0c10' }}>
+      {/* Uncluttered Federation Header */}
+      <TopNav
+        currentView={currentView}
+        onOpenStfiPortal={handleOpenStfiPortal}
+        onSelectNav={handleSelectNav}
+      />
 
-          {/* Main STFI Federation Portal Content */}
-          <main style={{ flex: 1 }}>
+      {/* Dynamic View Router */}
+      <main style={{ flex: 1 }}>
+        {currentView === 'myas' && (
+          <MyasCompliancePage onOpenPortal={handleOpenStfiPortal} />
+        )}
+
+        {currentView === 'events' && (
+          <ChampionshipEventsPage onOpenPortal={handleOpenStfiPortal} />
+        )}
+
+        {currentView === 'contact' && (
+          <ContactUsPage />
+        )}
+
+        {currentView === 'rules' && (
+          <RulesRegulationsPage />
+        )}
+
+        {currentView === 'notice' && (
+          <NoticeNewsPage />
+        )}
+
+        {currentView === 'home' && (
+          <>
             <EditorialHero
               onOpenStfiPortal={handleOpenStfiPortal}
-              onExploreRules={() => handleOpenStfiPortal('rules')}
+              onExploreRules={() => handleSelectNav('rules')}
             />
-            <EventCountdown onOpenPortal={handleOpenStfiPortal} />
+            <EventCountdown
+              onOpenPortal={() => handleSelectNav('events')}
+            />
             <StatsStrip />
             <MomentsShowcase
               onOpenPortal={handleOpenStfiPortal}
@@ -54,21 +107,23 @@ function App() {
               onOpenPortal={handleOpenStfiPortal}
             />
             <SponsorsStrip />
-          </main>
+          </>
+        )}
+      </main>
 
-          {/* Site Footer */}
-          <FooterGrid
-            onOpenStfiPortal={handleOpenStfiPortal}
-            onSelectNav={handleSelectNav}
-          />
+      {/* Site Footer */}
+      <FooterGrid
+        onOpenStfiPortal={handleOpenStfiPortal}
+        onSelectNav={handleSelectNav}
+      />
 
-          {/* Interactive Federation Portal Modal */}
-          <StfiPortalModal
-            isOpen={isStfiModalOpen}
-            onClose={() => setIsStfiModalOpen(false)}
-            initialTab={initialPortalTab}
-          />
-        </div>
+      {/* Interactive Federation Portal Quick Modal */}
+      <StfiPortalModal
+        isOpen={isStfiModalOpen}
+        onClose={() => setIsStfiModalOpen(false)}
+        initialTab={initialPortalTab}
+      />
+    </div>
   );
 }
 

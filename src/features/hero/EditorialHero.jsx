@@ -1,5 +1,4 @@
 import React from 'react';
-import { VerifiedUser as ShieldCheck } from '@mui/icons-material';
 import { PillButton } from '../../components/ui/PillButton';
 import { Img } from '../../components/ui/Img';
 import { useContent } from '../../content/ContentContext';
@@ -72,10 +71,6 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreRules }) => {
           gap: '18px'
         }}
       >
-        <span className="eyebrow" style={{ color: 'var(--brand-yellow)' }}>
-          {STFI_HERO_DATA.bannerTag}
-        </span>
-
         <h1
           className="display-headline"
           style={{ fontSize: 'clamp(48px, 9vw, 108px)', whiteSpace: 'pre-line', margin: 0 }}
@@ -92,16 +87,6 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreRules }) => {
             <span style={{ width: 40, height: 2, background: 'var(--brand-yellow)' }} />
           </div>
         )}
-
-        <p style={{ fontSize: '18px', lineHeight: 1.55, maxWidth: '640px', color: 'var(--surface-soft-mist)', fontWeight: 400 }}>
-          {STFI_HERO_DATA.subtitle}
-        </p>
-
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '4px' }}>
-          <span className="trust-chip"><ShieldCheck size={13} /> MYAS Recognized</span>
-          <span className="trust-chip">ISTAF Member</span>
-          <span className="trust-chip">ASTAF Affiliated</span>
-        </div>
 
         <div style={{ display: 'flex', gap: '12px', marginTop: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <button className="btn-pill btn-yellow" onClick={onExploreRules}>Explore Playing Rules</button>

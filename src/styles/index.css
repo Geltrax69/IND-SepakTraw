@@ -296,3 +296,17 @@ body {
   }
   .reveal.in { opacity: 1; transform: none; }
 }
+
+/* Editorial Workspace Responsive Grid */
+@media (max-width: 1024px) {
+  .editorial-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .editorial-mid-col, .editorial-right-col {
+    border-left: none !important;
+    border-right: none !important;
+    padding: 0 !important;
+  }
+}
+

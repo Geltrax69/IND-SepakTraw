@@ -36,6 +36,18 @@ const isLong = (k, v) =>
   typeof v === 'string' &&
   (v.length > 60 || /desc|description|subtitle|note|title/i.test(k));
 
+// Datetime fields: any key ending in "date"/"Date" holding an ISO-ish string.
+// Renders a real picker so a countdown/event date can't silently be set in the past.
+const isDateTime = (k, v) =>
+  typeof v === 'string' && /date$/i.test(k) && !isNaN(Date.parse(v));
+
+// datetime-local wants "YYYY-MM-DDTHH:mm" (no seconds/Z) in local time.
+const toLocalInput = (iso) => {
+  const d = new Date(iso);
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
+
 function blank(sample) {
   if (Array.isArray(sample)) return [];
   if (sample && typeof sample === 'object') {
@@ -56,6 +68,22 @@ function ValueEditor({ label, value, onChange }) {
       <label style={{ ...S.field, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
         <input type="checkbox" checked={value} onChange={(e) => onChange(e.target.checked)} />
         <span style={S.label}>{pretty(label)}</span>
+      </label>
+    );
+  }
+
+  if (isDateTime(label, value)) {
+    const inPast = new Date(value).getTime() <= Date.now();
+    return (
+      <label style={S.field}>
+        <span style={S.label}>{pretty(label)}</span>
+        <input
+          style={S.input}
+          type="datetime-local"
+          value={toLocalInput(value)}
+          onChange={(e) => onChange(new Date(e.target.value).toISOString())}
+        />
+        {inPast && <span style={{ fontSize: 11, color: '#c0392b', fontWeight: 600 }}>⚠ This date is in the past — any countdown will show as concluded.</span>}
       </label>
     );
   }

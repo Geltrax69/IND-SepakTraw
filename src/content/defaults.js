@@ -23,7 +23,7 @@ export const defaultContent = {
     kicker: 'Next Championship',
     title: '35th Senior National SepakTakraw Championship',
     venue: 'Indira Gandhi Indoor Stadium, New Delhi',
-    date: '2025-10-23T09:00:00',
+    date: '2026-10-23T09:00:00',
     image: assets.moments[1],
     cta: 'Event Details',
   },

@@ -310,3 +310,67 @@ body {
   }
 }
 
+/* ---- Mobile / small-screen pass ---- */
+
+/* Utility bar: drop the long org name (redundant with the logo) and let the
+   three CTA links wrap into their own centered row instead of one crammed line. */
+@media (max-width: 700px) {
+  .util-bar { justify-content: center; }
+  .util-bar-org { display: none; }
+  .util-bar-links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 10px 14px; text-align: center; }
+  .util-bar-sep { display: none; }
+}
+
+/* Hide the redundant "MYAS Compliance" pill in the main bar on mobile — it's
+   already in the hamburger drawer, and crowds the logo + menu icon otherwise. */
+@media (max-width: 960px) {
+  .nav-cta-desktop { display: none !important; }
+}
+
+/* Shrink the logo lockup on very narrow phones so it never crowds the hamburger. */
+@media (max-width: 380px) {
+  .nav-logo-wrap img { height: 36px !important; }
+}
+
+/* Hero: desktop-scale padding/min-height looks bloated on a phone screen. */
+@media (max-width: 640px) {
+  .hero-section { padding: 56px 20px !important; min-height: auto !important; }
+  .hero-btn-row { flex-direction: column; align-items: stretch; width: 100%; }
+  .hero-btn-row > * { width: 100%; text-align: center; }
+}
+
+/* Countdown banner: stack text above the timer instead of squeezing them side by side. */
+@media (max-width: 720px) {
+  .countdown-row { flex-direction: column; align-items: flex-start !important; padding: 32px 20px !important; }
+  .countdown-blocks { width: 100%; justify-content: center; }
+}
+@media (max-width: 400px) {
+  .count-block { min-width: 60px; padding: 10px 4px; }
+}
+
+/* Stats strip: 2-column on mobile with top dividers instead of side dividers
+   (a left-border grid breaks visually once items wrap to a new row). */
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .stats-grid .stat-item { border-left: none !important; border-top: 1px solid rgba(255,255,255,0.18); padding-top: 16px; }
+  .stats-grid .stat-item:nth-child(-n+2) { border-top: none; padding-top: 0; }
+}
+
+/* Federation pillar tiles: 460px tall tiles are excessive on a phone. */
+@media (max-width: 640px) {
+  .pillar-tile { height: 320px !important; }
+}
+
+/* General section padding: desktop sections use 64–96px; halve it on phones. */
+@media (max-width: 640px) {
+  .section-pad { padding-top: 40px !important; padding-bottom: 48px !important; }
+  .section-pad-sm { padding-top: 24px !important; padding-bottom: 24px !important; }
+  .page-header { padding: 40px 20px 32px !important; }
+}
+
+/* Success/download toast banners: long messages must wrap, not push the
+   close button off-screen or force horizontal scroll on a phone. */
+.toast-banner { flex-wrap: wrap; gap: 8px; }
+.toast-banner > div:first-child { min-width: 0; }
+.toast-banner span { overflow-wrap: anywhere; }
+

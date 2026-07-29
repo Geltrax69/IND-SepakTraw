@@ -35,15 +35,15 @@ export const EventCountdown = ({ onOpenPortal }) => {
     <section style={{ position: 'relative', overflow: 'hidden', background: 'var(--color-obsidian)' }}>
       <Img src={ev.image} alt={ev.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }} />
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(17,17,17,0.9), rgba(17,17,17,0.55))' }} />
-      <div className="max-width-container" style={{ position: 'relative', zIndex: 2, padding: '48px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 28, flexWrap: 'wrap', color: '#fff' }}>
+      <div className="max-width-container countdown-row" style={{ position: 'relative', zIndex: 2, padding: '48px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 28, flexWrap: 'wrap', color: '#fff' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 520 }}>
           <span className="kicker" style={{ alignSelf: 'flex-start' }}>{ev.kicker}</span>
           <h2 style={{ fontFamily: 'var(--font-nike-futura-nd)', fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 700, textTransform: 'uppercase', lineHeight: 1.05 }}>
             {ev.title}
           </h2>
           <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', fontSize: 14, fontWeight: 600, opacity: 0.9 }}>
-            <span style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}><CalendarDays size={16} /> {new Date(ev.date).toDateString()}</span>
-            <span style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}><MapPin size={16} /> {ev.venue}</span>
+            <span style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}><CalendarDays style={{ fontSize: 16 }} /> {new Date(ev.date).toDateString()}</span>
+            <span style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}><MapPin style={{ fontSize: 16 }} /> {ev.venue}</span>
           </div>
           {onOpenPortal && (
             <button className="btn-pill btn-yellow btn-sm" style={{ alignSelf: 'flex-start', marginTop: 6 }} onClick={() => onOpenPortal('events')}>
@@ -57,7 +57,7 @@ export const EventCountdown = ({ onOpenPortal }) => {
             <div className="count-label" style={{ fontSize: 13, opacity: 1 }}>Event Concluded</div>
           </div>
         ) : (
-          <div style={{ display: 'flex', gap: 12 }}>
+          <div className="countdown-blocks" style={{ display: 'flex', gap: 12 }}>
             {blocks.map(([label, val]) => (
               <div key={label} className="count-block">
                 <div key={val} className="count-num count-tick">{String(val).padStart(2, '0')}</div>

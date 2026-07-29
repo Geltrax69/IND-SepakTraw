@@ -8,6 +8,7 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreRules }) => {
   const STFI_HERO_DATA = content.hero;
   return (
     <section
+      className="hero-section"
       style={{
         backgroundColor: 'var(--color-obsidian)',
         color: 'var(--color-paper-white)',
@@ -88,7 +89,7 @@ export const EditorialHero = ({ onOpenStfiPortal, onExploreRules }) => {
           </div>
         )}
 
-        <div style={{ display: 'flex', gap: '12px', marginTop: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <div className="hero-btn-row" style={{ display: 'flex', gap: '12px', marginTop: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <button className="btn-pill btn-yellow" onClick={onExploreRules}>Explore Playing Rules</button>
           <button className="btn-pill btn-accent" onClick={() => onOpenStfiPortal('myas')}>MYAS Disclosures (28)</button>
           <PillButton variant="obsidian" style={{ border: '1px solid rgba(255,255,255,0.4)' }} onClick={() => onOpenStfiPortal('events')}>

@@ -11,7 +11,6 @@ import {
   Campaign as NoticeIcon,
 } from '@mui/icons-material';
 import { Img } from '../../components/ui/Img';
-import { Reveal } from '../../components/ui/Motion';
 import { useContent } from '../../content/ContentContext';
 
 const RELIABLE_VIDEO_URL = 'https://vjs.zencdn.net/v/oceans.mp4';
@@ -44,7 +43,7 @@ export const MomentsShowcase = ({ onOpenPortal, onSelectNav }) => {
   }, [featuredItem]);
 
   return (
-    <section style={{ backgroundColor: '#070708', color: '#ffffff', padding: '80px 0', position: 'relative', overflow: 'hidden' }}>
+    <section className="section-pad" style={{ backgroundColor: '#070708', color: '#ffffff', padding: '80px 0', position: 'relative', overflow: 'hidden' }}>
       {/* Background ambient lighting */}
       <div style={{ position: 'absolute', top: '-10%', left: '50%', transform: 'translateX(-50%)', width: '80vw', height: '300px', background: 'radial-gradient(circle, rgba(255, 199, 44, 0.06) 0%, rgba(7, 7, 8, 0) 70%)', pointerEvents: 'none' }} />
 

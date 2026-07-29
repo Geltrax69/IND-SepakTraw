@@ -11,7 +11,7 @@ export const CategoryGrid = ({ onOpenPortal, onSelectNav }) => {
   const CATEGORY_TILES = content.categories || [];
 
   return (
-    <section style={{ backgroundColor: '#0c0c0e', padding: '80px 0', borderTop: '1px solid #1a1a1e' }}>
+    <section className="section-pad" style={{ backgroundColor: '#0c0c0e', padding: '80px 0', borderTop: '1px solid #1a1a1e' }}>
       <div className="max-width-container" style={{ marginBottom: '44px', textAlign: 'center' }}>
         <span style={{ color: 'var(--brand-yellow)', fontSize: '12px', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
           CORE GOVERNANCE & COMPETITION FORMATS
@@ -44,6 +44,7 @@ export const CategoryGrid = ({ onOpenPortal, onSelectNav }) => {
             <Reveal
               key={tile.id || i}
               delay={0.08 * i}
+              className="pillar-tile"
               style={{
                 position: 'relative',
                 height: '460px',

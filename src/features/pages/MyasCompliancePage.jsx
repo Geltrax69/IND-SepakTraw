@@ -55,7 +55,7 @@ export const MyasCompliancePage = ({ onOpenPortal }) => {
   return (
     <div style={{ backgroundColor: '#0b0c10', color: '#f0f2f5', minHeight: '100vh', paddingBottom: '80px' }}>
       {/* Top Banner / Hero */}
-      <section style={{ backgroundColor: '#12141c', borderBottom: '1px solid #222634', padding: '60px 24px 48px' }}>
+      <section className="page-header" style={{ backgroundColor: '#12141c', borderBottom: '1px solid #222634', padding: '60px 24px 48px' }}>
         <div className="max-width-container">
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '30px', backgroundColor: 'rgba(255, 199, 44, 0.12)', border: '1px solid rgba(255, 199, 44, 0.3)', color: '#ffc72c', fontSize: '12px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '16px' }}>
             <ShieldCheck style={{ fontSize: 16 }} />
@@ -170,7 +170,7 @@ export const MyasCompliancePage = ({ onOpenPortal }) => {
 
         {/* Download Toast Notification */}
         {downloadNotice && (
-          <div style={{ backgroundColor: '#00a651', color: '#ffffff', padding: '14px 20px', borderRadius: '10px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: 700, boxShadow: '0 8px 24px rgba(0, 166, 81, 0.3)' }}>
+          <div className="toast-banner" style={{ backgroundColor: '#00a651', color: '#ffffff', padding: '14px 20px', borderRadius: '10px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: 700, boxShadow: '0 8px 24px rgba(0, 166, 81, 0.3)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <CheckIcon />
               <span>{downloadNotice}</span>

@@ -57,7 +57,7 @@ export const ContactUsPage = () => {
   return (
     <div style={{ backgroundColor: '#0b0c10', color: '#f0f2f5', minHeight: '100vh', paddingBottom: '80px' }}>
       {/* Header Banner */}
-      <section style={{ backgroundColor: '#12141c', borderBottom: '1px solid #222634', padding: '60px 24px 48px' }}>
+      <section className="page-header" style={{ backgroundColor: '#12141c', borderBottom: '1px solid #222634', padding: '60px 24px 48px' }}>
         <div className="max-width-container">
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '30px', backgroundColor: 'rgba(255, 199, 44, 0.12)', border: '1px solid rgba(255, 199, 44, 0.3)', color: '#ffc72c', fontSize: '12px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '16px' }}>
             <DirectoryIcon style={{ fontSize: 16 }} />
@@ -244,9 +244,9 @@ export const ContactUsPage = () => {
                     </div>
 
                     <div style={{ fontSize: '12.5px', color: '#a0a5b5', marginTop: '6px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <div>📧 {item.email}</div>
-                      <div>📞 {item.phone}</div>
-                      <div>📍 {item.address}</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><MailIcon style={{ fontSize: 14 }} /> {item.email}</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><PhoneIcon style={{ fontSize: 14 }} /> {item.phone}</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><LocationIcon style={{ fontSize: 14 }} /> {item.address}</div>
                     </div>
                   </div>
                 ))}

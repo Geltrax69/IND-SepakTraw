@@ -29,27 +29,27 @@ export const TopNav = ({ currentView, onOpenStfiPortal, onSelectNav }) => {
     <header style={{ backgroundColor: '#12141c', position: 'sticky', top: 0, zIndex: 90, borderBottom: '1px solid #222634' }}>
       {/* Top Utility Bar */}
       <div style={{ backgroundColor: '#0a0b0e', padding: '6px 24px', fontSize: '12px', color: '#a0a5b5', borderBottom: '1px solid #1a1d28' }}>
-        <div className="max-width-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-          <div style={{ fontWeight: 700, letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '8px', color: '#ffc72c' }}>
+        <div className="max-width-container util-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+          <div className="util-bar-org" style={{ fontWeight: 700, letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '8px', color: '#ffc72c' }}>
             <ShieldCheck style={{ fontSize: 15 }} />
             <span>{content.meta.orgName.toUpperCase()} — {content.meta.tagline}</span>
           </div>
 
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', fontWeight: 600 }}>
+          <div className="util-bar-links" style={{ display: 'flex', gap: '16px', alignItems: 'center', fontWeight: 600 }}>
             <button
               onClick={() => onSelectNav('myas')}
               style={{ background: 'none', border: 'none', color: currentView === 'myas' ? '#ffc72c' : '#ffffff', cursor: 'pointer', fontWeight: 700, textDecoration: 'underline' }}
             >
               MYAS Disclosures (28)
             </button>
-            <span style={{ opacity: 0.3 }}>|</span>
+            <span className="util-bar-sep" style={{ opacity: 0.3 }}>|</span>
             <button
               onClick={() => onSelectNav('events')}
               style={{ background: 'none', border: 'none', color: currentView === 'events' ? '#ffc72c' : '#ffffff', cursor: 'pointer', fontWeight: 700 }}
             >
               Championship Calendar
             </button>
-            <span style={{ opacity: 0.3 }}>|</span>
+            <span className="util-bar-sep" style={{ opacity: 0.3 }}>|</span>
             <button
               onClick={() => onSelectNav('contact')}
               style={{ background: 'none', border: 'none', color: currentView === 'contact' ? '#ffc72c' : '#ffffff', cursor: 'pointer', fontWeight: 700 }}
@@ -63,7 +63,7 @@ export const TopNav = ({ currentView, onOpenStfiPortal, onSelectNav }) => {
       {/* Main Navigation Bar */}
       <div className="max-width-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
         {/* Left: STFI Logo */}
-        <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => onSelectNav('home')}>
+        <div className="nav-logo-wrap" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', minWidth: 0 }} onClick={() => onSelectNav('home')}>
           <StfiLogo color="#ffffff" />
         </div>
 
@@ -166,7 +166,7 @@ export const TopNav = ({ currentView, onOpenStfiPortal, onSelectNav }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <button
             onClick={() => onSelectNav('myas')}
-            className="btn-pill btn-yellow btn-sm"
+            className="btn-pill btn-yellow btn-sm nav-cta-desktop"
             style={{ fontWeight: 800 }}
           >
             MYAS Compliance (28)

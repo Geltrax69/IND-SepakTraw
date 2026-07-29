@@ -7,7 +7,6 @@ import { MomentsShowcase } from './features/moments/MomentsShowcase';
 import { CategoryGrid } from './features/categories/CategoryGrid';
 import { ProductGrid } from './features/products/ProductGrid';
 import { FooterGrid } from './features/footer/FooterGrid';
-import { StfiPortalModal } from './features/stfi/StfiPortalModal';
 import { SponsorsStrip } from './features/moments/SponsorsStrip';
 
 // Dedicated Page Views
@@ -19,8 +18,6 @@ import { NoticeNewsPage } from './features/pages/NoticeNewsPage';
 
 function App() {
   const [currentView, setCurrentView] = useState('home');
-  const [isStfiModalOpen, setIsStfiModalOpen] = useState(false);
-  const [initialPortalTab, setInitialPortalTab] = useState('overview');
 
   // Handle URL hash / initial location mapping
   useEffect(() => {
@@ -29,11 +26,6 @@ function App() {
       setCurrentView(hash);
     }
   }, []);
-
-  const handleOpenStfiPortal = (tab = 'overview') => {
-    setInitialPortalTab(tab);
-    setIsStfiModalOpen(true);
-  };
 
   const handleSelectNav = (navId) => {
     let targetView = 'home';
@@ -59,18 +51,18 @@ function App() {
       {/* Uncluttered Federation Header */}
       <TopNav
         currentView={currentView}
-        onOpenStfiPortal={handleOpenStfiPortal}
+        onOpenStfiPortal={handleSelectNav}
         onSelectNav={handleSelectNav}
       />
 
       {/* Dynamic View Router */}
       <main style={{ flex: 1 }}>
         {currentView === 'myas' && (
-          <MyasCompliancePage onOpenPortal={handleOpenStfiPortal} />
+          <MyasCompliancePage onOpenPortal={handleSelectNav} />
         )}
 
         {currentView === 'events' && (
-          <ChampionshipEventsPage onOpenPortal={handleOpenStfiPortal} />
+          <ChampionshipEventsPage onOpenPortal={handleSelectNav} />
         )}
 
         {currentView === 'contact' && (
@@ -88,7 +80,7 @@ function App() {
         {currentView === 'home' && (
           <>
             <EditorialHero
-              onOpenStfiPortal={handleOpenStfiPortal}
+              onOpenStfiPortal={handleSelectNav}
               onExploreRules={() => handleSelectNav('rules')}
             />
             <EventCountdown
@@ -96,15 +88,15 @@ function App() {
             />
             <StatsStrip />
             <MomentsShowcase
-              onOpenPortal={handleOpenStfiPortal}
+              onOpenPortal={handleSelectNav}
               onSelectNav={handleSelectNav}
             />
             <CategoryGrid
-              onOpenPortal={handleOpenStfiPortal}
+              onOpenPortal={handleSelectNav}
               onSelectNav={handleSelectNav}
             />
             <ProductGrid
-              onOpenPortal={handleOpenStfiPortal}
+              onOpenPortal={handleSelectNav}
             />
             <SponsorsStrip />
           </>
@@ -113,15 +105,8 @@ function App() {
 
       {/* Site Footer */}
       <FooterGrid
-        onOpenStfiPortal={handleOpenStfiPortal}
+        onOpenStfiPortal={handleSelectNav}
         onSelectNav={handleSelectNav}
-      />
-
-      {/* Interactive Federation Portal Quick Modal */}
-      <StfiPortalModal
-        isOpen={isStfiModalOpen}
-        onClose={() => setIsStfiModalOpen(false)}
-        initialTab={initialPortalTab}
       />
     </div>
   );

@@ -10,6 +10,13 @@ import {
   Delete as Trash2,
   ArrowUpward as ArrowUp,
   ArrowDownward as ArrowDown,
+  FileDownload as DownloadIcon,
+  FileUpload as UploadIcon,
+  RestartAlt as ResetIcon,
+  ArrowBack as BackIcon,
+  Bolt as BoltIcon,
+  WarningAmber as WarningIcon,
+  Videocam as VideoIcon,
 } from '@mui/icons-material';
 
 const SECTIONS = [
@@ -18,7 +25,7 @@ const SECTIONS = [
   ['featuredEvent', 'Countdown Banner'],
   ['stats', 'Stat Strip'],
   ['highlights', 'News & Moments'],
-  ['xPosts', 'X Posts & Social Embeds ⚡'],
+  ['xPosts', 'X Posts & Social Embeds'],
   ['nav', 'Navigation'],
   ['categories', 'Category Tiles'],
   ['notices', 'Notices & News'],
@@ -83,7 +90,11 @@ function ValueEditor({ label, value, onChange }) {
           value={toLocalInput(value)}
           onChange={(e) => onChange(new Date(e.target.value).toISOString())}
         />
-        {inPast && <span style={{ fontSize: 11, color: '#c0392b', fontWeight: 600 }}>⚠ This date is in the past — any countdown will show as concluded.</span>}
+        {inPast && (
+          <span style={{ fontSize: 11, color: '#c0392b', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+            <WarningIcon style={{ fontSize: 14 }} /> This date is in the past — any countdown will show as concluded.
+          </span>
+        )}
       </label>
     );
   }
@@ -135,8 +146,8 @@ function ArrayEditor({ label, value, onChange }) {
           <div style={S.itemBar}>
             <span style={S.itemNum}>#{i + 1}</span>
             <div style={{ display: 'flex', gap: 6 }}>
-              <button style={S.miniBtn} onClick={() => move(i, -1)} disabled={i === 0}>↑</button>
-              <button style={S.miniBtn} onClick={() => move(i, 1)} disabled={i === value.length - 1}>↓</button>
+              <button style={S.miniBtn} onClick={() => move(i, -1)} disabled={i === 0}><ArrowUp style={{ fontSize: 14 }} /></button>
+              <button style={S.miniBtn} onClick={() => move(i, 1)} disabled={i === value.length - 1}><ArrowDown style={{ fontSize: 14 }} /></button>
               <button style={{ ...S.miniBtn, color: '#c0392b' }} onClick={() => remove(i)}>Delete</button>
             </div>
           </div>
@@ -162,7 +173,7 @@ function XPostsManager({ posts = [], onChange, onFlash }) {
       onChange([extracted, ...posts]);
       setUrlInput('');
       setCustomText('');
-      onFlash('X Post extracted & added ✓');
+      onFlash('X Post extracted & added');
     } catch (err) {
       onFlash('Failed to extract X post data');
     } finally {
@@ -172,7 +183,7 @@ function XPostsManager({ posts = [], onChange, onFlash }) {
 
   const removePost = (id) => {
     onChange(posts.filter((p) => p.id !== id));
-    onFlash('Removed post ✓');
+    onFlash('Removed post');
   };
 
   return (
@@ -180,7 +191,7 @@ function XPostsManager({ posts = [], onChange, onFlash }) {
       {/* Quick Extractor Card */}
       <div style={{ backgroundColor: '#fff', padding: 24, borderRadius: 12, border: '2px solid #1d9bf0', boxShadow: '0 4px 12px rgba(29,155,240,0.1)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-          <Sparkles color="#1d9bf0" size={20} />
+          <Sparkles style={{ color: '#1d9bf0', fontSize: 20 }} />
           <h3 style={{ fontSize: 18, fontWeight: 800, margin: 0, color: '#111' }}>
             Auto-Extract Post Details from X (Twitter)
           </h3>
@@ -226,7 +237,8 @@ function XPostsManager({ posts = [], onChange, onFlash }) {
               gap: 8,
             }}
           >
-            {loading ? '⚡ Extracting details from X...' : '⚡ Extract & Publish to Home Page'}
+            <BoltIcon style={{ fontSize: 16 }} />
+            {loading ? 'Extracting details from X...' : 'Extract & Publish to Home Page'}
           </button>
         </div>
       </div>
@@ -245,18 +257,18 @@ function XPostsManager({ posts = [], onChange, onFlash }) {
                   <span style={{ fontWeight: 700, fontSize: 15 }}>{post.authorName}</span>
                   <span style={{ color: '#1d9bf0', fontSize: 13, fontFamily: 'monospace' }}>{post.authorHandle}</span>
                   {post.isVideo && (
-                    <span style={{ backgroundColor: '#1d9bf0', color: '#fff', fontSize: 10, fontWeight: 800, padding: '2px 6px', borderRadius: 4 }}>
-                      VIDEO ATTACHED 🎬
+                    <span style={{ backgroundColor: '#1d9bf0', color: '#fff', fontSize: 10, fontWeight: 800, padding: '2px 6px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+                      <VideoIcon style={{ fontSize: 12 }} /> VIDEO ATTACHED
                     </span>
                   )}
                 </div>
 
                 <div style={{ display: 'flex', gap: 8 }}>
                   <a href={post.url} target="_blank" rel="noreferrer" style={{ fontSize: 12, color: '#1d9bf0', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4 }}>
-                    View on X <ExternalLink size={12} />
+                    View on X <ExternalLink style={{ fontSize: 12 }} />
                   </a>
                   <button style={{ ...S.miniBtn, color: '#c0392b' }} onClick={() => removePost(post.id)}>
-                    <Trash2 size={13} /> Delete
+                    <Trash2 style={{ fontSize: 13 }} /> Delete
                   </button>
                 </div>
               </div>
@@ -304,7 +316,7 @@ export function AdminPanel() {
     if (!file) return;
     const r = new FileReader();
     r.onload = () => {
-      try { importJSON(r.result); flash('Imported ✓'); }
+      try { importJSON(r.result); flash('Imported'); }
       catch { flash('Import failed — invalid JSON'); }
     };
     r.readAsText(file);
@@ -327,11 +339,11 @@ export function AdminPanel() {
           ))}
         </nav>
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 8, paddingTop: 20 }}>
-          <button style={S.toolBtn} onClick={doExport}>⬇ Export JSON</button>
-          <button style={S.toolBtn} onClick={() => fileRef.current.click()}>⬆ Import JSON</button>
+          <button style={S.toolBtnRow} onClick={doExport}><DownloadIcon style={{ fontSize: 16 }} /> Export JSON</button>
+          <button style={S.toolBtnRow} onClick={() => fileRef.current.click()}><UploadIcon style={{ fontSize: 16 }} /> Import JSON</button>
           <input ref={fileRef} type="file" accept="application/json" hidden onChange={doImport} />
-          <button style={{ ...S.toolBtn, color: '#e08a8a' }} onClick={() => { if (confirm('Reset ALL content to defaults?')) { reset(); flash('Reset ✓'); } }}>↺ Reset to defaults</button>
-          <Link to="/" style={{ ...S.toolBtn, textAlign: 'center', textDecoration: 'none' }}>← View live site</Link>
+          <button style={{ ...S.toolBtnRow, color: '#e08a8a' }} onClick={() => { if (confirm('Reset ALL content to defaults?')) { reset(); flash('Reset — content restored to defaults'); } }}><ResetIcon style={{ fontSize: 16 }} /> Reset to defaults</button>
+          <Link to="/" style={{ ...S.toolBtnRow, textDecoration: 'none' }}><BackIcon style={{ fontSize: 16 }} /> View live site</Link>
         </div>
       </aside>
 
@@ -341,7 +353,7 @@ export function AdminPanel() {
             <h1 style={S.h1}>{SECTIONS.find(([k]) => k === active)?.[1]}</h1>
             <p style={S.hint}>Changes save automatically to this browser. Use Export to back up / publish.</p>
           </div>
-          {msg && <span style={S.toast}>{msg}</span>}
+          {msg && <span style={S.toast}><CheckCircle2 style={{ fontSize: 14 }} /> {msg}</span>}
         </header>
 
         <div style={S.editor}>
@@ -368,11 +380,12 @@ const S = {
   navBtn: { textAlign: 'left', background: 'none', border: 'none', color: '#bbb', padding: '10px 12px', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: 'pointer' },
   navBtnActive: { background: '#fff', color: '#111' },
   toolBtn: { background: '#222', border: '1px solid #333', color: '#ddd', padding: '9px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer' },
+  toolBtnRow: { background: '#222', border: '1px solid #333', color: '#ddd', padding: '9px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 },
   main: { flex: 1, padding: '32px 40px', maxWidth: 900 },
   header: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 },
   h1: { fontSize: 28, fontWeight: 800, margin: 0, color: '#111' },
   hint: { fontSize: 13, color: '#707072', marginTop: 4 },
-  toast: { background: '#111', color: '#fff', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 600 },
+  toast: { background: '#111', color: '#fff', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 6 },
   editor: { display: 'flex', flexDirection: 'column', gap: 16 },
   objectGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 },
   field: { display: 'flex', flexDirection: 'column', gap: 5 },

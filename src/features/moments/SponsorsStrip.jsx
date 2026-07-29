@@ -5,7 +5,7 @@ export const SponsorsStrip = () => {
   const sponsors = assets.sponsors || [];
 
   return (
-    <section style={{ backgroundColor: '#0c0c0d', padding: '40px 0', borderTop: '1px solid #222', borderBottom: '1px solid #222' }}>
+    <section className="section-pad-sm" style={{ backgroundColor: '#0c0c0d', padding: '40px 0', borderTop: '1px solid #222', borderBottom: '1px solid #222' }}>
       <div className="max-width-container">
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <span style={{ fontSize: '12px', fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--brand-yellow)' }}>

@@ -26,6 +26,7 @@ export const FooterGrid = ({ onOpenStfiPortal, onSelectNav }) => {
 
   return (
     <footer
+      className="section-pad footer-root"
       style={{
         backgroundColor: '#0a0b0e',
         borderTop: '1px solid #1a1d28',

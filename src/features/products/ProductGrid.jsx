@@ -10,7 +10,7 @@ export const ProductGrid = ({ onOpenPortal }) => {
   const [activeTab, setActiveTab] = useState('notices');
 
   return (
-    <section id="stfi-content-section" style={{ backgroundColor: 'var(--surface-paper-white)', padding: '64px 0 96px 0' }}>
+    <section id="stfi-content-section" className="section-pad" style={{ backgroundColor: 'var(--surface-paper-white)', padding: '64px 0 96px 0' }}>
       <div className="max-width-container">
         {/* Section Header & Tab Switcher */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '36px', alignItems: 'center', textAlign: 'center' }}>

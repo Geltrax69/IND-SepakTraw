@@ -27,8 +27,8 @@ export const TopNav = ({ currentView, onOpenStfiPortal, onSelectNav }) => {
 
   return (
     <header style={{ backgroundColor: '#12141c', position: 'sticky', top: 0, zIndex: 90, borderBottom: '1px solid #222634' }}>
-      {/* Top Utility Bar */}
-      <div style={{ backgroundColor: '#0a0b0e', padding: '6px 24px', fontSize: '12px', color: '#a0a5b5', borderBottom: '1px solid #1a1d28' }}>
+      {/* Top Utility Bar — desktop only, everything here is also in the mobile drawer */}
+      <div className="util-bar-wrap" style={{ backgroundColor: '#0a0b0e', padding: '6px 24px', fontSize: '12px', color: '#a0a5b5', borderBottom: '1px solid #1a1d28' }}>
         <div className="max-width-container util-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
           <div className="util-bar-org" style={{ fontWeight: 700, letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '8px', color: '#ffc72c' }}>
             <ShieldCheck style={{ fontSize: 15 }} />

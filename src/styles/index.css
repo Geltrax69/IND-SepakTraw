@@ -312,13 +312,11 @@ body {
 
 /* ---- Mobile / small-screen pass ---- */
 
-/* Utility bar: drop the long org name (redundant with the logo) and let the
-   three CTA links wrap into their own centered row instead of one crammed line. */
-@media (max-width: 700px) {
-  .util-bar { justify-content: center; }
-  .util-bar-org { display: none; }
-  .util-bar-links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 10px 14px; text-align: center; }
-  .util-bar-sep { display: none; }
+/* Utility bar: everything in it (org name + MYAS/Events/Contact links) is
+   already reachable via the logo and the mobile hamburger drawer below it,
+   so drop the whole bar on mobile instead of trying to reflow it. */
+@media (max-width: 960px) {
+  .util-bar-wrap { display: none; }
 }
 
 /* Hide the redundant "MYAS Compliance" pill in the main bar on mobile — it's

@@ -13,6 +13,15 @@
 ![Vite](https://img.shields.io/badge/Vite-6-purple)
 ![MUI](https://img.shields.io/badge/MUI-9-blue)
 
+## Screenshots
+
+<p align="center">
+  <img src="./screenshot-ui.png" alt="IND-SepakTraw UI" width="100%" />
+  <br />
+  <em>IND Sepak Takraw portal — hero, game guide, match simulator.</em>
+</p>
+
+
 ## What it is
 
 A dark-themed web portal for Indian Sepak Takraw (the STFI — Sepak Takraw Federation of India). It presents the sport with an editorial hero, event countdown, stats strips, moments showcase, category and product grids, and sponsor strips — plus dedicated pages for MYAS compliance, championship events, rules & regulations, notices/news, and contact. A built-in admin panel lets editors manage site content without touching code.
